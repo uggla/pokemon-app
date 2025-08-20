@@ -214,8 +214,8 @@ export function setupPokemonModal() {
         // add small arrow between pre items if not last
         if (i < preList.length - 1) {
           const small = document.createElement('div');
-          small.className = 'evo-arrow-small';
-          small.textContent = '→';
+          small.className = 'evo-arrow-small evo-arrow-small-left';
+          small.textContent = '←';
           preContainer.appendChild(small);
         }
       }
