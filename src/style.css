@@ -357,6 +357,8 @@ button:focus-visible {
 .evo-targets { display:flex; gap:0.5rem; align-items:center; }
 .evo-target { width:72px; height:72px; object-fit:contain; border-radius:6px; }
 
+.evo-arrow-small { display:inline-flex; align-items:center; justify-content:center; color:#bbb; font-size:1.1rem; margin:0 0.3rem; }
+
 /* make table images clickable */
 #pokemons-table td.cell-image img { cursor: pointer; }
 

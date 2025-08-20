@@ -185,7 +185,8 @@ export function setupPokemonModal() {
 
     // load pre evolutions (with caption)
     if (Array.isArray(preList) && preList.length > 0) {
-      for (const e of preList) {
+      for (let i=0;i<preList.length;i++) {
+        const e = preList[i];
         const caption = (typeof e.name === 'string') ? e.name : (e && e.name && (e.name.fr || e.name.en) ? (e.name.fr || e.name.en) : '');
         if (e && e.sprites && e.sprites.regular) {
           preContainer.appendChild(createEvoItem(e.sprites.regular, caption, e));
@@ -210,12 +211,20 @@ export function setupPokemonModal() {
         } else {
           preContainer.appendChild(createEvoItem('', caption));
         }
+        // add small arrow between pre items if not last
+        if (i < preList.length - 1) {
+          const small = document.createElement('div');
+          small.className = 'evo-arrow-small';
+          small.textContent = '→';
+          preContainer.appendChild(small);
+        }
       }
     }
 
     // load next evolutions
     if (Array.isArray(nextList) && nextList.length > 0) {
-      for (const e of nextList) {
+      for (let i=0;i<nextList.length;i++) {
+        const e = nextList[i];
         const caption = (typeof e.name === 'string') ? e.name : (e && e.name && (e.name.fr || e.name.en) ? (e.name.fr || e.name.en) : '');
         if (e && e.sprites && e.sprites.regular) {
           nextContainer.appendChild(createEvoItem(e.sprites.regular, caption, e));
@@ -239,6 +248,13 @@ export function setupPokemonModal() {
           })();
         } else {
           nextContainer.appendChild(createEvoItem('', caption));
+        }
+        // add small arrow between next items if not last
+        if (i < nextList.length - 1) {
+          const small = document.createElement('div');
+          small.className = 'evo-arrow-small';
+          small.textContent = '→';
+          nextContainer.appendChild(small);
         }
       }
     }
