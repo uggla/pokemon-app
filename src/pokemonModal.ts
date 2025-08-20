@@ -34,6 +34,10 @@ export function setupPokemonModal() {
     img.src = p.sprites?.regular || '';
     img.alt = p.name?.fr || p.name?.en || '';
     img.className = 'modal-sprite';
+    // wrap the sprite so we can add a shimmering overlay
+    const spriteWrap = document.createElement('div');
+    spriteWrap.className = 'modal-sprite-wrap';
+    spriteWrap.appendChild(img);
 
     const titles = document.createElement('div');
     titles.className = 'modal-titles';
@@ -46,7 +50,7 @@ export function setupPokemonModal() {
     titles.appendChild(nameFr);
     titles.appendChild(nameEn);
 
-    header.appendChild(img);
+    header.appendChild(spriteWrap);
     header.appendChild(titles);
 
     const meta = document.createElement('div');
