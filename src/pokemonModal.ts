@@ -88,10 +88,10 @@ export function setupPokemonModal() {
       const keys = ['hp','atk','def','spe_atk','spe_def','vit'];
       const vals = keys.map(k => Number(stats?.[k] ?? 0));
       const maxVal = Math.max(255, ...vals);
-      const size = 220;
+      const size = 260;
       const cx = size / 2;
       const cy = size / 2;
-      const radius = size / 2 - 24;
+      const radius = size / 2 - 28;
       const ns = 'http://www.w3.org/2000/svg';
       const svg = document.createElementNS(ns, 'svg');
       svg.setAttribute('viewBox', `0 0 ${size} ${size}`);
@@ -111,13 +111,13 @@ export function setupPokemonModal() {
         }
         const poly = document.createElementNS(ns, 'polygon');
         poly.setAttribute('points', points.join(' '));
-        poly.setAttribute('fill', L % 2 ? 'rgba(0,123,255,0.03)' : 'transparent');
-        poly.setAttribute('stroke', '#e6eef8');
+        poly.setAttribute('fill', L % 2 ? 'rgba(255,0,0,0.03)' : 'transparent');
+        poly.setAttribute('stroke', '#f5eaea');
         poly.setAttribute('stroke-width', '1');
         svg.appendChild(poly);
       }
 
-      // axes and labels + value indicators
+      // axes and labels (labels include values, in white)
       for (let i = 0; i < labels.length; i++) {
         const angle = (Math.PI * 2 / labels.length) * i - Math.PI / 2;
         const x = cx + Math.cos(angle) * radius;
@@ -125,38 +125,25 @@ export function setupPokemonModal() {
         const line = document.createElementNS(ns, 'line');
         line.setAttribute('x1', String(cx)); line.setAttribute('y1', String(cy));
         line.setAttribute('x2', String(x)); line.setAttribute('y2', String(y));
-        line.setAttribute('stroke', '#dfeefc'); line.setAttribute('stroke-width', '1');
+        line.setAttribute('stroke', '#f7eaea'); line.setAttribute('stroke-width', '1');
         svg.appendChild(line);
 
-        // label
-        const tx = cx + Math.cos(angle) * (radius + 18);
-        const ty = cy + Math.sin(angle) * (radius + 18);
+        // label with value
+        const v = vals[i];
+        const tx = cx + Math.cos(angle) * (radius + 20);
+        const ty = cy + Math.sin(angle) * (radius + 20);
         const text = document.createElementNS(ns, 'text');
         text.setAttribute('x', String(tx)); text.setAttribute('y', String(ty));
-        text.setAttribute('fill', '#0b2540'); text.setAttribute('font-size', '12');
-        text.setAttribute('font-weight', '600');
+        text.setAttribute('fill', '#ffffff'); text.setAttribute('font-size', '13');
+        text.setAttribute('font-weight', '700');
         const cos = Math.cos(angle);
         const anchor = cos > 0.3 ? 'start' : (cos < -0.3 ? 'end' : 'middle');
         text.setAttribute('text-anchor', anchor);
-        text.textContent = labels[i];
+        text.textContent = `${labels[i]} (${v})`;
         svg.appendChild(text);
-
-        // numeric value near inner side of point
-        const v = vals[i];
-        const rVal = radius * (v / maxVal);
-        const vx = cx + Math.cos(angle) * (rVal + 8);
-        const vy = cy + Math.sin(angle) * (rVal + 8);
-        const vtext = document.createElementNS(ns, 'text');
-        vtext.setAttribute('x', String(vx)); vtext.setAttribute('y', String(vy));
-        vtext.setAttribute('fill', '#07213a'); vtext.setAttribute('font-size', '11');
-        vtext.setAttribute('font-weight', '600');
-        vtext.setAttribute('alignment-baseline', 'middle');
-        vtext.setAttribute('text-anchor', anchor);
-        vtext.textContent = String(v);
-        svg.appendChild(vtext);
       }
 
-      // stats polygon (highlighted)
+      // stats polygon (highlighted) + point markers
       const pts: string[] = [];
       for (let i = 0; i < vals.length; i++) {
         const v = vals[i];
@@ -168,15 +155,15 @@ export function setupPokemonModal() {
         // point marker
         const circ = document.createElementNS(ns, 'circle');
         circ.setAttribute('cx', String(x)); circ.setAttribute('cy', String(y));
-        circ.setAttribute('r', '4'); circ.setAttribute('fill', '#007bff');
-        circ.setAttribute('stroke', '#fff'); circ.setAttribute('stroke-width', '1.2');
+        circ.setAttribute('r', '5'); circ.setAttribute('fill', '#ff4d4d');
+        circ.setAttribute('stroke', '#fff'); circ.setAttribute('stroke-width', '1.5');
         svg.appendChild(circ);
       }
       const shape = document.createElementNS(ns, 'polygon');
       shape.setAttribute('points', pts.join(' '));
-      shape.setAttribute('fill', 'rgba(0,123,255,0.38)');
-      shape.setAttribute('stroke', '#0056b3');
-      shape.setAttribute('stroke-width', '2');
+      shape.setAttribute('fill', 'rgba(255,0,0,0.45)');
+      shape.setAttribute('stroke', '#b30000');
+      shape.setAttribute('stroke-width', '2.5');
       svg.appendChild(shape);
 
       const wrap = document.createElement('div');
@@ -184,6 +171,7 @@ export function setupPokemonModal() {
       wrap.appendChild(svg);
       return wrap;
     }
+
 const statsWrap = buildRadar(p.stats || {});
 
     // (talents removed per request)
