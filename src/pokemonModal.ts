@@ -134,33 +134,59 @@ export function setupPokemonModal() {
     nextContainer.className = 'evo-side evo-next';
 
     // helper to create evolution item (image + caption)
-    function createEvoItem(imgSrc: string, caption: string) {
+    function createEvoItem(imgSrc: string, caption: string, evoData?: any) {
       const wrap = document.createElement('div');
       wrap.className = 'evo-item';
       const im = document.createElement('img');
       im.className = 'evo-target';
       im.src = imgSrc || '';
       im.alt = caption || '';
+      im.style.cursor = 'pointer';
       const cap = document.createElement('div');
       cap.className = 'evo-caption';
       cap.textContent = caption || '';
       wrap.appendChild(im);
       wrap.appendChild(cap);
+
+      // click -> open this pokemon in the same modal
+      im.addEventListener('click', async () => {
+        try {
+          if (evoData) {
+            // if we already have full data, render it
+            if (evoData.stats || evoData.sprites) {
+              renderPokemon(evoData);
+              return;
+            }
+            // otherwise try to fetch by pokedex_id
+            if (typeof evoData.pokedex_id === 'number') {
+              const res = await fetch(`https://tyradex.vercel.app/api/v1/pokemon/${evoData.pokedex_id}`);
+              if (!res.ok) return;
+              const json = await res.json();
+              renderPokemon(json);
+              return;
+            }
+          }
+          // as a fallback, if image src looks like an API resource containing an id, try nothing
+        } catch (err) {
+          // ignore errors
+        }
+      });
+
       return wrap;
     }
 
     // render current image with caption
     const currentCaption = (p.name && (p.name.fr || p.name.en)) ? (p.name.fr || p.name.en) : '';
-    currentContainer.appendChild(createEvoItem(p.sprites?.regular || '', currentCaption));
+    currentContainer.appendChild(createEvoItem(p.sprites?.regular || '', currentCaption, p));
 
     // load pre evolutions (with caption)
     if (Array.isArray(preList) && preList.length > 0) {
       for (const e of preList) {
         const caption = (typeof e.name === 'string') ? e.name : (e && e.name && (e.name.fr || e.name.en) ? (e.name.fr || e.name.en) : '');
         if (e && e.sprites && e.sprites.regular) {
-          preContainer.appendChild(createEvoItem(e.sprites.regular, caption));
+          preContainer.appendChild(createEvoItem(e.sprites.regular, caption, e));
         } else if (e && typeof e.pokedex_id === 'number') {
-          const placeholder = createEvoItem('', caption);
+          const placeholder = createEvoItem('', caption, e);
           preContainer.appendChild(placeholder);
           (async () => {
             try {
@@ -188,9 +214,9 @@ export function setupPokemonModal() {
       for (const e of nextList) {
         const caption = (typeof e.name === 'string') ? e.name : (e && e.name && (e.name.fr || e.name.en) ? (e.name.fr || e.name.en) : '');
         if (e && e.sprites && e.sprites.regular) {
-          nextContainer.appendChild(createEvoItem(e.sprites.regular, caption));
+          nextContainer.appendChild(createEvoItem(e.sprites.regular, caption, e));
         } else if (e && typeof e.pokedex_id === 'number') {
-          const placeholder = createEvoItem('', caption);
+          const placeholder = createEvoItem('', caption, e);
           nextContainer.appendChild(placeholder);
           (async () => {
             try {
