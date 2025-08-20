@@ -191,6 +191,7 @@ const statsWrap = buildRadar(p.stats || {});
     // group meta + names into an info block so it can be moved upward
     const infoWrap = document.createElement('div');
     infoWrap.className = 'modal-info';
+    infoWrap.setAttribute('style', 'margin-top: -9.5rem;');
     infoWrap.appendChild(meta);
     infoWrap.appendChild(namesWrap);
 
