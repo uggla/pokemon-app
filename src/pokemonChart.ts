@@ -129,6 +129,17 @@ export function setupPokemonChart() {
       image.setAttribute('preserveAspectRatio', 'xMidYMid slice');
       image.setAttribute('class', 'chart-point-image');
       image.setAttribute('aria-hidden', 'true');
+      // make image clickable to show modal
+      // add pointer cursor
+      image.setAttribute('style', 'cursor: pointer');
+      image.addEventListener('click', () => {
+        try {
+          const ev = new CustomEvent('pokemon:show', { detail: p });
+          window.dispatchEvent(ev);
+        } catch (e) {
+          // ignore
+        }
+      });
       const title = document.createElementNS(ns, 'title');
       title.textContent = `${p.name?.fr || p.name?.en || ''} — ${statKey}: ${v}`;
       image.appendChild(title);

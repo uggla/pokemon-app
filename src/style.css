@@ -208,3 +208,78 @@ button:focus-visible {
 .chart-point-image {
   filter: drop-shadow(0 0 4px rgba(0,0,0,0.4));
 }
+
+
+/* Modal overlay for pokemon details */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+.modal-overlay.hidden {
+  display: none;
+}
+.modal-card {
+  background: var(--card-bg, rgba(20,20,20,0.98));
+  border-radius: 10px;
+  max-width: 1100px;
+  width: 100%;
+  max-height: 94vh;
+  overflow: auto;
+  position: relative;
+  padding: 1.25rem 1.5rem 1.5rem 1.5rem;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.7);
+}
+.modal-close {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  background: transparent;
+  border: none;
+  color: #ddd;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.modal-content { text-align: left; }
+.modal-header { display:flex; gap:0.75rem; align-items:center; margin-bottom:0.5rem; }
+.modal-sprite { width:128px; height:128px; object-fit:contain; }
+.modal-titles h2 { margin:0; font-size:1.75rem; }
+.modal-titles .muted { color: #bbb; font-size:0.95rem; }
+.modal-meta { display:flex; gap:1rem; margin-bottom:0.25rem; color:#ddd; }
+
+.modal-info { display:flex; flex-direction:column; gap:0.25rem; align-items:flex-start; margin-top: -6.5rem; margin-bottom:0.5rem; }
+.modal-names { margin:0; }
+
+.modal-types { display:flex; gap:0.5rem; margin-bottom:0.75rem; }
+.type-badge { display:flex; gap:0.4rem; align-items:center; background:rgba(255,255,255,0.03); padding:0.25rem 0.5rem; border-radius:6px; }
+.modal-stats { border-collapse: collapse; width:100%; margin-bottom:0.75rem; }
+.modal-stats th, .modal-stats td { border:1px solid rgba(255,255,255,0.04); padding:0.4rem 0.6rem; }
+.modal-talents ul { margin:0; padding-left:1.2rem; }
+
+.modal-names ul { margin:0 0 0.75rem 1rem; padding:0; }
+.modal-names li { list-style: disc; color:#ddd; margin:0.15rem 0; }
+
+.modal-evolution { display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem; }
+.evo-current { width:96px; height:96px; object-fit:contain; border-radius:8px; }
+.evo-arrow { font-size:2rem; color:#bbb; }
+.evo-targets { display:flex; gap:0.5rem; align-items:center; }
+.evo-target { width:72px; height:72px; object-fit:contain; border-radius:6px; }
+
+/* make table images clickable */
+#pokemons-table td.cell-image img { cursor: pointer; }
+
+
+.evo-item { display:flex; flex-direction:column; align-items:center; gap:0.12rem; }
+.evo-caption { font-size:0.85rem; color:#ddd; max-width:96px; text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.evo-side { display:flex; gap:0.5rem; align-items:center; }
+.evo-center { display:flex; gap:0.5rem; align-items:center; }
+
+/* header row to place stats to the right */
+.modal-header-row { display:flex; gap:0.6rem; align-items:flex-start; justify-content:space-between; padding-right:1rem; }
+.modal-header-row .modal-header { margin-bottom:0; }
+.modal-header-row .modal-stats { width: 240px; margin:0 3.5rem 0 0; }

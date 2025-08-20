@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import { setupCounter } from "./counter.ts";
 import { setupPokemonTable } from "./pokemonTable.ts";
 import { setupPokemonChart } from './pokemonChart.ts';
+import { setupPokemonModal } from './pokemonModal.ts';
 
 window.addEventListener("load", () => {
   document.body.style.display = "block";
@@ -92,6 +93,7 @@ setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
 
 document.querySelector<HTMLDivElement>("#mypara")!.innerHTML = `<p>Here are pokemons !</p>`;
 
-// initialize chart first so it can receive the initial visible event
+// initialize modal first, then chart so it can receive events
+setupPokemonModal();
 setupPokemonChart();
 await setupPokemonTable();

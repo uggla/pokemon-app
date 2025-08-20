@@ -46,6 +46,23 @@ export async function setupPokemonTable(): Promise<void> {
       `;
       })
       .join("");
+    // attach click handlers to images to open modal
+    const imgs = Array.from(tbody.querySelectorAll<HTMLImageElement>('td.cell-image img'));
+    imgs.forEach((img, i) => {
+      img.style.cursor = 'pointer';
+      // replace any previous handler
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      img.onclick = () => {
+        const p = pokemons[i];
+        try {
+          const ev = new CustomEvent('pokemon:show', { detail: p });
+          window.dispatchEvent(ev);
+        } catch (e) {
+          // ignore
+        }
+      };
+    });
   }
 
   function renderPage(page: number) {
