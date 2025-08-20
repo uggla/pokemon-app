@@ -198,3 +198,13 @@ button:focus-visible {
     height: 36px;
   }
 }
+
+#pokemon-chart svg {
+  max-width: 100%;
+  height: auto;
+  background: rgba(0,0,0,0.02);
+  border-radius: 6px;
+}
+.chart-point-image {
+  filter: drop-shadow(0 0 4px rgba(0,0,0,0.4));
+}

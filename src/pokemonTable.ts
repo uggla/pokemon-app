@@ -16,7 +16,7 @@ export async function setupPokemonTable(): Promise<void> {
   const searchInput = document.querySelector<HTMLInputElement>("#search-name")!;
   const searchClear = document.querySelector<HTMLButtonElement>("#search-clear")!;
 
-  const PAGE_SIZE = 100;
+  const PAGE_SIZE = 50;
   let currentPage = 1;
   let totalPages = 1;
   let allPokemons: any[] = [];
@@ -56,6 +56,13 @@ export async function setupPokemonTable(): Promise<void> {
       tbody.innerHTML = `<tr><td colspan="9">No pokemons found</td></tr>`;
     } else {
       renderRows(slice);
+    }
+    // notify other components about visible pokemons
+    try {
+      const ev = new CustomEvent('pokemons:visible', { detail: slice });
+      window.dispatchEvent(ev);
+    } catch (e) {
+      // ignore
     }
     pageInfo.textContent = `Page ${currentPage} / ${totalPages}`;
     btnPrev.disabled = currentPage <= 1;
@@ -187,4 +194,3 @@ export async function setupPokemonTable(): Promise<void> {
     tbody.innerHTML = `<tr><td colspan="9">${(err as Error).message}</td></tr>`;
   }
 }
-
