@@ -88,15 +88,16 @@ export function setupPokemonModal() {
       const keys = ['hp','atk','def','spe_atk','spe_def','vit'];
       const vals = keys.map(k => Number(stats?.[k] ?? 0));
       const maxVal = Math.max(255, ...vals);
-      const size = 260;
-      const cx = size / 2;
-      const cy = size / 2;
-      const radius = size / 2 - 28;
+      const vw = 400;
+      const vh = 300;
+      const cx = -50 + vw / 2; // center x based on viewBox -50
+      const cy = -10 + vh / 2; // center y based on viewBox -10
+      const radius = Math.min(vw, vh) / 2 - 36;
       const ns = 'http://www.w3.org/2000/svg';
       const svg = document.createElementNS(ns, 'svg');
-      svg.setAttribute('viewBox', `0 0 ${size} ${size}`);
-      svg.setAttribute('width', String(size));
-      svg.setAttribute('height', String(size));
+      svg.setAttribute('viewBox', '-50 -10 400 300');
+      svg.setAttribute('width', '350');
+      svg.setAttribute('height', '350');
       svg.classList.add('radar-svg');
 
       const levels = 4;
