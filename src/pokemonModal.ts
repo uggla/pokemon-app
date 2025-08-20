@@ -179,6 +179,32 @@ export function setupPokemonModal() {
       return wrap;
     }
 
+
+    // helper to create an inline SVG arrow element
+    function createArrowElement(direction: 'right' | 'left', cls?: string) {
+      const wrap = document.createElement('div');
+      wrap.className = cls ? cls : 'evo-arrow-small';
+      const svgNs = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(svgNs, 'svg');
+      svg.setAttribute('width', '16');
+      svg.setAttribute('height', '16');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('fill', 'none');
+      svg.setAttribute('aria-hidden', 'true');
+      const path = document.createElementNS(svgNs, 'path');
+      if (direction === 'right') {
+        path.setAttribute('d', 'M8 5l8 7-8 7');
+      } else {
+        path.setAttribute('d', 'M16 5l-8 7 8 7');
+      }
+      path.setAttribute('stroke', 'currentColor');
+      path.setAttribute('stroke-width', '2');
+      path.setAttribute('stroke-linecap', 'round');
+      path.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(path);
+      wrap.appendChild(svg);
+      return wrap;
+    }
     // render current image with caption
     const currentCaption = (p.name && (p.name.fr || p.name.en)) ? (p.name.fr || p.name.en) : '';
     currentContainer.appendChild(createEvoItem(p.sprites?.regular || '', currentCaption, p));
@@ -214,10 +240,7 @@ export function setupPokemonModal() {
         }
         // add small arrow between pre items if not last
         if (i < revPre.length - 1) {
-          const small = document.createElement('div');
-          small.className = 'evo-arrow-small evo-arrow-small-left';
-          small.textContent = '←';
-          preContainer.appendChild(small);
+          preContainer.appendChild(createArrowElement('left', 'evo-arrow-small evo-arrow-small-left'));
         }
       }
     }
@@ -252,21 +275,14 @@ export function setupPokemonModal() {
         }
         // add small arrow between next items if not last
         if (i < nextList.length - 1) {
-          const small = document.createElement('div');
-          small.className = 'evo-arrow-small';
-          small.textContent = '→';
-          nextContainer.appendChild(small);
+          nextContainer.appendChild(createArrowElement('right', 'evo-arrow-small'));
         }
       }
     }
 
     // arrows and assembly
-    const leftArrow = document.createElement('div');
-    leftArrow.className = 'evo-arrow evo-arrow-left';
-    leftArrow.textContent = preList.length > 0 ? '←' : '';
-    const rightArrow = document.createElement('div');
-    rightArrow.className = 'evo-arrow evo-arrow-right';
-    rightArrow.textContent = nextList.length > 0 ? '→' : '';
+    const leftArrow = preList.length > 0 ? createArrowElement('left', 'evo-arrow evo-arrow-left') : document.createElement('div');
+    const rightArrow = nextList.length > 0 ? createArrowElement('right', 'evo-arrow evo-arrow-right') : document.createElement('div');
 
     evoWrap.appendChild(preContainer);
     evoWrap.appendChild(leftArrow);

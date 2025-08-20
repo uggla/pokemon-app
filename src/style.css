@@ -359,6 +359,8 @@ button:focus-visible {
 
 .evo-arrow-small { display:inline-flex; align-items:center; justify-content:center; color:#bbb; font-size:1.1rem; margin:0 0.3rem; }
 .evo-arrow-small-left { transform: scaleX(-1); }
+.evo-arrow svg, .evo-arrow-small svg { display:block; color: #bbb; }
+.evo-arrow { display:inline-flex; align-items:center; justify-content:center; }
 
 
 /* make table images clickable */
