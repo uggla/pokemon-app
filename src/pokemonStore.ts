@@ -1,14 +1,15 @@
-let ALL_POKEMONS: any[] | null = null;
-
-export function setAllPokemons(list: any[]) {
-  ALL_POKEMONS = list;
+class PokemonStore {
+  private all: any[] | null = null;
+  setAll(list: any[]) { this.all = list; }
+  getAll(): any[] | null { return this.all; }
+  getById(id: number): any | undefined {
+    if (!this.all) return undefined;
+    return this.all.find(p => Number(p.pokedex_id) === Number(id));
+  }
 }
 
-export function getAllPokemons(): any[] | null {
-  return ALL_POKEMONS;
-}
-
-export function getPokemonById(id: number): any | undefined {
-  if (!ALL_POKEMONS) return undefined;
-  return ALL_POKEMONS.find(p => Number(p.pokedex_id) === Number(id));
-}
+const store = new PokemonStore();
+export default store;
+export const setAllPokemons = (list: any[]) => store.setAll(list);
+export const getAllPokemons = () => store.getAll();
+export const getPokemonById = (id: number) => store.getById(id);

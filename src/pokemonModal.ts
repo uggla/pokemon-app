@@ -82,20 +82,88 @@ export function setupPokemonModal() {
       });
     }
 
-    // stats
-    const statsWrap = document.createElement('table');
-    statsWrap.className = 'modal-stats';
-    statsWrap.innerHTML = `
-      <thead><tr><th>Stat</th><th>Value</th></tr></thead>
-      <tbody>
-        <tr><td>HP</td><td>${p.stats?.hp ?? ''}</td></tr>
-        <tr><td>ATK</td><td>${p.stats?.atk ?? ''}</td></tr>
-        <tr><td>DEF</td><td>${p.stats?.def ?? ''}</td></tr>
-        <tr><td>SPA</td><td>${p.stats?.spe_atk ?? ''}</td></tr>
-        <tr><td>SPD</td><td>${p.stats?.spe_def ?? ''}</td></tr>
-        <tr><td>VIT</td><td>${p.stats?.vit ?? ''}</td></tr>
-      </tbody>
-    `;
+    // stats -> render as radar SVG
+    function buildRadar(stats: any) {
+      const labels = ['HP','ATK','DEF','SPA','SPD','VIT'];
+      const keys = ['hp','atk','def','spe_atk','spe_def','vit'];
+      const vals = keys.map(k => Number(stats?.[k] ?? 0));
+      const maxVal = Math.max(255, ...vals);
+      const size = 220;
+      const cx = size / 2;
+      const cy = size / 2;
+      const radius = size / 2 - 24;
+      const ns = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(ns, 'svg');
+      svg.setAttribute('viewBox', `0 0 ${size} ${size}`);
+      svg.setAttribute('width', String(size));
+      svg.setAttribute('height', String(size));
+      svg.classList.add('radar-svg');
+
+      const levels = 4;
+      for (let L = levels; L >= 1; L--) {
+        const r = radius * (L / levels);
+        const points: string[] = [];
+        for (let i = 0; i < labels.length; i++) {
+          const angle = (Math.PI * 2 / labels.length) * i - Math.PI / 2;
+          const x = cx + Math.cos(angle) * r;
+          const y = cy + Math.sin(angle) * r;
+          points.push(`${x},${y}`);
+        }
+        const poly = document.createElementNS(ns, 'polygon');
+        poly.setAttribute('points', points.join(' '));
+        poly.setAttribute('fill', L % 2 ? 'rgba(0,0,0,0.03)' : 'transparent');
+        poly.setAttribute('stroke', '#ddd');
+        poly.setAttribute('stroke-width', '1');
+        svg.appendChild(poly);
+      }
+
+      // axes and labels
+      for (let i = 0; i < labels.length; i++) {
+        const angle = (Math.PI * 2 / labels.length) * i - Math.PI / 2;
+        const x = cx + Math.cos(angle) * radius;
+        const y = cy + Math.sin(angle) * radius;
+        const line = document.createElementNS(ns, 'line');
+        line.setAttribute('x1', String(cx)); line.setAttribute('y1', String(cy));
+        line.setAttribute('x2', String(x)); line.setAttribute('y2', String(y));
+        line.setAttribute('stroke', '#e0e0e0'); line.setAttribute('stroke-width', '1');
+        svg.appendChild(line);
+
+        const tx = cx + Math.cos(angle) * (radius + 14);
+        const ty = cy + Math.sin(angle) * (radius + 14);
+        const text = document.createElementNS(ns, 'text');
+        text.setAttribute('x', String(tx)); text.setAttribute('y', String(ty));
+        text.setAttribute('fill', '#222'); text.setAttribute('font-size', '12');
+        const cos = Math.cos(angle);
+        const anchor = cos > 0.3 ? 'start' : (cos < -0.3 ? 'end' : 'middle');
+        text.setAttribute('text-anchor', anchor);
+        text.textContent = labels[i];
+        svg.appendChild(text);
+      }
+
+      // stats polygon
+      const pts: string[] = [];
+      for (let i = 0; i < vals.length; i++) {
+        const v = vals[i];
+        const r = radius * (v / maxVal);
+        const angle = (Math.PI * 2 / vals.length) * i - Math.PI / 2;
+        const x = cx + Math.cos(angle) * r;
+        const y = cy + Math.sin(angle) * r;
+        pts.push(`${x},${y}`);
+      }
+      const shape = document.createElementNS(ns, 'polygon');
+      shape.setAttribute('points', pts.join(' '));
+      shape.setAttribute('fill', 'rgba(255,0,0,0.35)');
+      shape.setAttribute('stroke', '#d32');
+      shape.setAttribute('stroke-width', '2');
+      svg.appendChild(shape);
+
+      const wrap = document.createElement('div');
+      wrap.className = 'modal-stats';
+      wrap.appendChild(svg);
+      return wrap;
+    }
+
+    const statsWrap = buildRadar(p.stats || {});
 
     // (talents removed per request)
 
@@ -198,17 +266,14 @@ export function setupPokemonModal() {
           preContainer.appendChild(placeholder);
                       // try to lookup in the global list instead of calling API
             try {
-              const all = (window as any).__ALL_POKEMONS as any[] | undefined;
-              if (all && Array.isArray(all)) {
-                const found = all.find(x => Number(x.pokedex_id) === Number(e.pokedex_id));
-                if (found) {
-                  const img = found.sprites?.regular || '';
-                  const nm = (found.name?.fr) ? found.name.fr : (found.name?.en ? found.name.en : caption);
-                  const imgEl = placeholder.querySelector('img');
-                  const capEl = placeholder.querySelector('.evo-caption');
-                  if (imgEl && img) imgEl.src = img;
-                  if (capEl && nm) capEl.textContent = nm;
-                }
+              const found = getPokemonById(Number(e.pokedex_id));
+              if (found) {
+                const img = found.sprites?.regular || '';
+                const nm = (found.name?.fr) ? found.name.fr : (found.name?.en ? found.name.en : caption);
+                const imgEl = placeholder.querySelector('img') as HTMLImageElement | null;
+                const capEl = placeholder.querySelector('.evo-caption');
+                if (imgEl && img) imgEl.src = img;
+                if (capEl && nm) capEl.textContent = nm;
               }
             } catch (err) {
               // ignore
@@ -235,17 +300,14 @@ export function setupPokemonModal() {
           nextContainer.appendChild(placeholder);
                       // try to lookup in the global list instead of calling API
             try {
-              const all = (window as any).__ALL_POKEMONS as any[] | undefined;
-              if (all && Array.isArray(all)) {
-                const found = all.find(x => Number(x.pokedex_id) === Number(e.pokedex_id));
-                if (found) {
-                  const img = found.sprites?.regular || '';
-                  const nm = (found.name?.fr) ? found.name.fr : (found.name?.en ? found.name.en : caption);
-                  const imgEl = placeholder.querySelector('img');
-                  const capEl = placeholder.querySelector('.evo-caption');
-                  if (imgEl && img) imgEl.src = img;
-                  if (capEl && nm) capEl.textContent = nm;
-                }
+              const found = getPokemonById(Number(e.pokedex_id));
+              if (found) {
+                const img = found.sprites?.regular || '';
+                const nm = (found.name?.fr) ? found.name.fr : (found.name?.en ? found.name.en : caption);
+                const imgEl = placeholder.querySelector('img') as HTMLImageElement | null;
+                const capEl = placeholder.querySelector('.evo-caption');
+                if (imgEl && img) imgEl.src = img;
+                if (capEl && nm) capEl.textContent = nm;
               }
             } catch (err) {
               // ignore

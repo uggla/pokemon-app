@@ -16,6 +16,7 @@ export async function setupPokemonTable(): Promise<void> {
   const pageInfo = document.querySelector<HTMLSpanElement>("#page-info")!;
   const searchInput = document.querySelector<HTMLInputElement>("#search-name")!;
   const searchClear = document.querySelector<HTMLButtonElement>("#search-clear")!;
+  const genSelect = document.querySelector<HTMLSelectElement>("#filter-gen")!;
 
   const PAGE_SIZE = 50;
   let currentPage = 1;
@@ -36,6 +37,7 @@ export async function setupPokemonTable(): Promise<void> {
             <img src="${p.sprites.regular}" alt="${p.name.fr}" width="48" height="48"/>
           </td>
           <td class="cell-name">${p.name.fr}</td>
+          <td class="cell-gen">${p.generation}</td>
           <td>${p.category}</td>
           <td>${stats.hp}</td>
           <td>${stats.atk}</td>
@@ -71,7 +73,7 @@ export async function setupPokemonTable(): Promise<void> {
     const end = start + PAGE_SIZE;
     const slice = allPokemons.slice(start, end);
     if (slice.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="9">No pokemons found</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="10">No pokemons found</td></tr>`;
     } else {
       renderRows(slice);
     }
@@ -211,7 +213,22 @@ export async function setupPokemonTable(): Promise<void> {
 
     // default sort
     applySortForKey('name', 'asc');
+
+    // filter by generation select
+    genSelect.addEventListener('change', () => {
+      const v = genSelect.value;
+      if (v === '') {
+        allPokemons = [...originalPokemons];
+      } else {
+        const g = Number(v);
+        allPokemons = originalPokemons.filter(p => Number(p.generation) === g);
+      }
+      totalPages = Math.max(1, Math.ceil(allPokemons.length / PAGE_SIZE));
+      currentPage = 1;
+      applySortForKey('name', 'asc');
+    });
+
   } catch (err) {
-    tbody.innerHTML = `<tr><td colspan="9">${(err as Error).message}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="10">${(err as Error).message}</td></tr>`;
   }
 }
