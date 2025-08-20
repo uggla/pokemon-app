@@ -144,7 +144,7 @@ export function setupPokemonModal() {
         svg.appendChild(text);
       }
 
-      // stats polygon (highlighted) + point markers
+      // stats polyline (highlighted) — no point markers
       const pts: string[] = [];
       for (let i = 0; i < vals.length; i++) {
         const v = vals[i];
@@ -153,19 +153,15 @@ export function setupPokemonModal() {
         const x = cx + Math.cos(angle) * r;
         const y = cy + Math.sin(angle) * r;
         pts.push(`${x},${y}`);
-        // point marker
-        const circ = document.createElementNS(ns, 'circle');
-        circ.setAttribute('cx', String(x)); circ.setAttribute('cy', String(y));
-        circ.setAttribute('r', '5'); circ.setAttribute('fill', '#ff4d4d');
-        circ.setAttribute('stroke', '#fff'); circ.setAttribute('stroke-width', '1.5');
-        svg.appendChild(circ);
       }
-      const shape = document.createElementNS(ns, 'polygon');
-      shape.setAttribute('points', pts.join(' '));
-      shape.setAttribute('fill', 'rgba(255,0,0,0.45)');
-      shape.setAttribute('stroke', '#b30000');
-      shape.setAttribute('stroke-width', '2.5');
-      svg.appendChild(shape);
+      const polyline = document.createElementNS(ns, 'polyline');
+      polyline.setAttribute('points', pts.join(' '));
+      polyline.setAttribute('fill', 'none');
+      polyline.setAttribute('stroke', '#b30000');
+      polyline.setAttribute('stroke-width', '3');
+      polyline.setAttribute('stroke-linejoin', 'round');
+      polyline.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(polyline);
 
       const wrap = document.createElement('div');
       wrap.className = 'modal-stats';
