@@ -1,3 +1,5 @@
+import { getPokemonById } from './pokemonStore.ts';
+
 export function setupPokemonModal() {
   // create overlay
   const overlay = document.createElement('div');
@@ -164,16 +166,9 @@ export function setupPokemonModal() {
             // otherwise try to lookup by pokedex_id from global list
             if (typeof evoData.pokedex_id === 'number') {
               try {
-                const all = (window as any).__ALL_POKEMONS as any[] | undefined;
-                if (all && Array.isArray(all)) {
-                  const found = all.find(x => Number(x.pokedex_id) === Number(evoData.pokedex_id));
-                  if (found) {
-                    renderPokemon(found);
-                  }
-                }
-              } catch (_) {
-                // ignore
-              }
+                const found = getPokemonById(evoData.pokedex_id);
+                if (found) renderPokemon(found);
+              } catch (_) { /* ignore */ }
               return;
             }
           }
