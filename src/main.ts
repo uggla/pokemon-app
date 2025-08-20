@@ -29,8 +29,13 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 
 setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
 
-document.querySelector<HTMLDivElement>("#mypara")!.innerHTML = `<p>Coucou !</p>`;
+document.querySelector<HTMLDivElement>("#mypara")!.innerHTML = `<p>Here are pokemons !</p>`;
 
-const pokemons = await Pokemons.load();
-const list = document.querySelector<HTMLUListElement>("#pokemons")!;
-list.innerHTML = pokemons.slice(1, 17).map(p => `<li><img id="pokemon" src="${p.sprites.regular}"/></li>`).join("");
+try {
+  const pokemons = await Pokemons.load();
+  const list = document.querySelector<HTMLUListElement>("#pokemons")!;
+  list.innerHTML = pokemons.slice(1, 17).map(p => `<li><img id="pokemon" src="${p.sprites.regular}"/></li>`).join("");
+} catch (err) {
+  const list = document.querySelector<HTMLUListElement>("#pokemons")!;
+  list.innerHTML = (err as Error).message;
+}
