@@ -185,8 +185,9 @@ export function setupPokemonModal() {
 
     // load pre evolutions (with caption)
     if (Array.isArray(preList) && preList.length > 0) {
-      for (let i=0;i<preList.length;i++) {
-        const e = preList[i];
+      const revPre = Array.from(preList).reverse();
+      for (let i=0;i<revPre.length;i++) {
+        const e = revPre[i];
         const caption = (typeof e.name === 'string') ? e.name : (e && e.name && (e.name.fr || e.name.en) ? (e.name.fr || e.name.en) : '');
         if (e && e.sprites && e.sprites.regular) {
           preContainer.appendChild(createEvoItem(e.sprites.regular, caption, e));
@@ -212,7 +213,7 @@ export function setupPokemonModal() {
           preContainer.appendChild(createEvoItem('', caption));
         }
         // add small arrow between pre items if not last
-        if (i < preList.length - 1) {
+        if (i < revPre.length - 1) {
           const small = document.createElement('div');
           small.className = 'evo-arrow-small evo-arrow-small-left';
           small.textContent = '←';
