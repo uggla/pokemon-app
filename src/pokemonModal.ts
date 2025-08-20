@@ -169,6 +169,7 @@ export function setupPokemonModal() {
 
       const wrap = document.createElement('div');
       wrap.className = 'modal-stats';
+      wrap.setAttribute('style', 'margin-right: 6.5rem;');
       wrap.appendChild(svg);
       return wrap;
     }
