@@ -154,14 +154,13 @@ export function setupPokemonModal() {
         const y = cy + Math.sin(angle) * r;
         pts.push(`${x},${y}`);
       }
-      const polyline = document.createElementNS(ns, 'polyline');
-      polyline.setAttribute('points', pts.join(' '));
-      polyline.setAttribute('fill', 'none');
-      polyline.setAttribute('stroke', '#b30000');
-      polyline.setAttribute('stroke-width', '3');
-      polyline.setAttribute('stroke-linejoin', 'round');
-      polyline.setAttribute('stroke-linecap', 'round');
-      svg.appendChild(polyline);
+      const polygon = document.createElementNS(ns, 'polygon');
+      polygon.setAttribute('points', pts.join(' '));
+      polygon.setAttribute('fill', 'rgba(255,0,0,0.45)');
+      polygon.setAttribute('stroke', '#b30000');
+      polygon.setAttribute('stroke-width', '2.5');
+      polygon.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(polygon);
 
       const wrap = document.createElement('div');
       wrap.className = 'modal-stats';
