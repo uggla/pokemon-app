@@ -149,7 +149,10 @@ export async function setupPokemonTable(): Promise<void> {
 
   // initial load
   try {
-    originalPokemons = await Pokemons.load() as any[];
+    const loaded = await Pokemons.load() as any[];
+    // expose full list globally so other components can lookup by pokedex_id
+    try { (window as any).__ALL_POKEMONS = loaded; } catch (e) { /* ignore */ }
+    originalPokemons = loaded;
     if (originalPokemons.length > 0) originalPokemons = originalPokemons.slice(1);
     allPokemons = [...originalPokemons];
     totalPages = Math.max(1, Math.ceil(allPokemons.length / PAGE_SIZE));

@@ -152,8 +152,8 @@ export function setupPokemonModal() {
       wrap.appendChild(im);
       wrap.appendChild(cap);
 
-      // click -> open this pokemon in the same modal
-      im.addEventListener('click', async () => {
+      // click -> open this pokemon in the same modal (lookup from global list)
+      im.addEventListener('click', () => {
         try {
           if (evoData) {
             // if we already have full data, render it
@@ -161,16 +161,22 @@ export function setupPokemonModal() {
               renderPokemon(evoData);
               return;
             }
-            // otherwise try to fetch by pokedex_id
+            // otherwise try to lookup by pokedex_id from global list
             if (typeof evoData.pokedex_id === 'number') {
-              const res = await fetch(`https://tyradex.vercel.app/api/v1/pokemon/${evoData.pokedex_id}`);
-              if (!res.ok) return;
-              const json = await res.json();
-              renderPokemon(json);
+              try {
+                const all = (window as any).__ALL_POKEMONS as any[] | undefined;
+                if (all && Array.isArray(all)) {
+                  const found = all.find(x => Number(x.pokedex_id) === Number(evoData.pokedex_id));
+                  if (found) {
+                    renderPokemon(found);
+                  }
+                }
+              } catch (_) {
+                // ignore
+              }
               return;
             }
           }
-          // as a fallback, if image src looks like an API resource containing an id, try nothing
         } catch (err) {
           // ignore errors
         }
@@ -180,31 +186,6 @@ export function setupPokemonModal() {
     }
 
 
-    // helper to create an inline SVG arrow element
-    function createArrowElement(direction: 'right' | 'left', cls?: string) {
-      const wrap = document.createElement('div');
-      wrap.className = cls ? cls : 'evo-arrow-small';
-      const svgNs = 'http://www.w3.org/2000/svg';
-      const svg = document.createElementNS(svgNs, 'svg');
-      svg.setAttribute('width', '16');
-      svg.setAttribute('height', '16');
-      svg.setAttribute('viewBox', '0 0 24 24');
-      svg.setAttribute('fill', 'none');
-      svg.setAttribute('aria-hidden', 'true');
-      const path = document.createElementNS(svgNs, 'path');
-      if (direction === 'right') {
-        path.setAttribute('d', 'M8 5l8 7-8 7');
-      } else {
-        path.setAttribute('d', 'M16 5l-8 7 8 7');
-      }
-      path.setAttribute('stroke', 'currentColor');
-      path.setAttribute('stroke-width', '2');
-      path.setAttribute('stroke-linecap', 'round');
-      path.setAttribute('stroke-linejoin', 'round');
-      svg.appendChild(path);
-      wrap.appendChild(svg);
-      return wrap;
-    }
     // render current image with caption
     const currentCaption = (p.name && (p.name.fr || p.name.en)) ? (p.name.fr || p.name.en) : '';
     currentContainer.appendChild(createEvoItem(p.sprites?.regular || '', currentCaption, p));
@@ -220,27 +201,29 @@ export function setupPokemonModal() {
         } else if (e && typeof e.pokedex_id === 'number') {
           const placeholder = createEvoItem('', caption, e);
           preContainer.appendChild(placeholder);
-          (async () => {
+                      // try to lookup in the global list instead of calling API
             try {
-              const res = await fetch(`https://tyradex.vercel.app/api/v1/pokemon/${e.pokedex_id}`);
-              if (!res.ok) return;
-              const json = await res.json();
-              const img = json?.sprites?.regular || '';
-              const nm = (json?.name?.fr) ? json.name.fr : (json?.name?.en ? json.name.en : caption);
-              const imgEl = placeholder.querySelector('img');
-              const capEl = placeholder.querySelector('.evo-caption');
-              if (imgEl && img) imgEl.src = img;
-              if (capEl && nm) capEl.textContent = nm;
+              const all = (window as any).__ALL_POKEMONS as any[] | undefined;
+              if (all && Array.isArray(all)) {
+                const found = all.find(x => Number(x.pokedex_id) === Number(e.pokedex_id));
+                if (found) {
+                  const img = found.sprites?.regular || '';
+                  const nm = (found.name?.fr) ? found.name.fr : (found.name?.en ? found.name.en : caption);
+                  const imgEl = placeholder.querySelector('img');
+                  const capEl = placeholder.querySelector('.evo-caption');
+                  if (imgEl && img) imgEl.src = img;
+                  if (capEl && nm) capEl.textContent = nm;
+                }
+              }
             } catch (err) {
               // ignore
             }
-          })();
         } else {
           preContainer.appendChild(createEvoItem('', caption));
         }
         // add small arrow between pre items if not last
         if (i < revPre.length - 1) {
-          preContainer.appendChild(createArrowElement('left', 'evo-arrow-small evo-arrow-small-left'));
+          const small = document.createElement('div'); small.className='evo-arrow-small evo-arrow-small-left'; small.textContent='←'; preContainer.appendChild(small);
         }
       }
     }
@@ -255,34 +238,36 @@ export function setupPokemonModal() {
         } else if (e && typeof e.pokedex_id === 'number') {
           const placeholder = createEvoItem('', caption, e);
           nextContainer.appendChild(placeholder);
-          (async () => {
+                      // try to lookup in the global list instead of calling API
             try {
-              const res = await fetch(`https://tyradex.vercel.app/api/v1/pokemon/${e.pokedex_id}`);
-              if (!res.ok) return;
-              const json = await res.json();
-              const img = json?.sprites?.regular || '';
-              const nm = (json?.name?.fr) ? json.name.fr : (json?.name?.en ? json.name.en : caption);
-              const imgEl = placeholder.querySelector('img');
-              const capEl = placeholder.querySelector('.evo-caption');
-              if (imgEl && img) imgEl.src = img;
-              if (capEl && nm) capEl.textContent = nm;
+              const all = (window as any).__ALL_POKEMONS as any[] | undefined;
+              if (all && Array.isArray(all)) {
+                const found = all.find(x => Number(x.pokedex_id) === Number(e.pokedex_id));
+                if (found) {
+                  const img = found.sprites?.regular || '';
+                  const nm = (found.name?.fr) ? found.name.fr : (found.name?.en ? found.name.en : caption);
+                  const imgEl = placeholder.querySelector('img');
+                  const capEl = placeholder.querySelector('.evo-caption');
+                  if (imgEl && img) imgEl.src = img;
+                  if (capEl && nm) capEl.textContent = nm;
+                }
+              }
             } catch (err) {
               // ignore
             }
-          })();
         } else {
           nextContainer.appendChild(createEvoItem('', caption));
         }
         // add small arrow between next items if not last
         if (i < nextList.length - 1) {
-          nextContainer.appendChild(createArrowElement('right', 'evo-arrow-small'));
+          const small = document.createElement('div'); small.className='evo-arrow-small'; small.textContent='→'; nextContainer.appendChild(small);
         }
       }
     }
 
     // arrows and assembly
-    const leftArrow = preList.length > 0 ? createArrowElement('left', 'evo-arrow evo-arrow-left') : document.createElement('div');
-    const rightArrow = nextList.length > 0 ? createArrowElement('right', 'evo-arrow evo-arrow-right') : document.createElement('div');
+    const leftArrow = document.createElement('div'); leftArrow.className='evo-arrow evo-arrow-left'; leftArrow.textContent = preList.length > 0 ? '←' : '';
+    const rightArrow = document.createElement('div'); rightArrow.className='evo-arrow evo-arrow-right'; rightArrow.textContent = nextList.length > 0 ? '→' : '';
 
     evoWrap.appendChild(preContainer);
     evoWrap.appendChild(leftArrow);
