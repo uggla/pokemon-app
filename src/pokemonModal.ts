@@ -261,7 +261,8 @@ const statsWrap = buildRadar(p.stats || {});
 
     // load pre evolutions (with caption)
     if (Array.isArray(preList) && preList.length > 0) {
-      const revPre = Array.from(preList).reverse();
+      // keep the original order: oldest -> ... -> immediate pre-evo
+      const revPre = Array.from(preList);
       for (let i=0;i<revPre.length;i++) {
         const e = revPre[i];
         const caption = (typeof e.name === 'string') ? e.name : (e && e.name && (e.name.fr || e.name.en) ? (e.name.fr || e.name.en) : '');
@@ -289,7 +290,7 @@ const statsWrap = buildRadar(p.stats || {});
         }
         // add small arrow between pre items if not last
         if (i < revPre.length - 1) {
-          const small = document.createElement('div'); small.className='evo-arrow-small evo-arrow-small-left'; small.textContent='←'; preContainer.appendChild(small);
+          const small = document.createElement('div'); small.className='evo-arrow-small'; small.textContent='→'; preContainer.appendChild(small);
         }
       }
     }
@@ -329,7 +330,7 @@ const statsWrap = buildRadar(p.stats || {});
     }
 
     // arrows and assembly
-    const leftArrow = document.createElement('div'); leftArrow.className='evo-arrow evo-arrow-left'; leftArrow.textContent = preList.length > 0 ? '←' : '';
+    const leftArrow = document.createElement('div'); leftArrow.className='evo-arrow evo-arrow-left'; leftArrow.textContent = preList.length > 0 ? '→' : '';
     const rightArrow = document.createElement('div'); rightArrow.className='evo-arrow evo-arrow-right'; rightArrow.textContent = nextList.length > 0 ? '→' : '';
 
     evoWrap.appendChild(preContainer);
