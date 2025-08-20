@@ -285,6 +285,23 @@ export function setupPokemonModal() {
     document.body.style.overflow = 'hidden';
     // focus close for accessibility
     closeBtn.focus();
+
+    // trigger shimmer once on the main sprite
+    try {
+      const spriteWrap = document.querySelector('.modal-sprite-wrap');
+      if (spriteWrap) {
+        // add class to play animation once
+        spriteWrap.classList.add('shimmer-once');
+        // remove the class after animation ends so it can replay next open
+        const handler = () => {
+          spriteWrap.classList.remove('shimmer-once');
+          spriteWrap.removeEventListener('animationend', handler);
+        };
+        spriteWrap.addEventListener('animationend', handler);
+      }
+    } catch (e) {
+      // ignore
+    }
   }
 
   function close() {

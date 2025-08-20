@@ -324,7 +324,7 @@ button:focus-visible {
   filter: blur(6px);
   opacity: 0.0;
   pointer-events: none;
-  animation: shimmer 2.2s infinite;
+  /* animation is triggered via class to play once on open */
 }
 
 @keyframes shimmer {
@@ -414,4 +414,8 @@ button:focus-visible {
   .evo-side .evo-item, .evo-center .evo-item, .evo-next .evo-item { display:flex; }
   
   .modal-info { margin-top: 0; }
+}
+
+.shimmer-once::after {
+  animation: shimmer 2.2s ease-in-out 1 forwards;
 }
