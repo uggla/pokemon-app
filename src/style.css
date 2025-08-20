@@ -99,17 +99,102 @@ button:focus-visible {
   }
 }
 
-#pokemons {
-  list-style-type: none;
-  padding-left: 0;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+#search-name {
+  margin-left: 0.5rem;
+  margin-top: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.08);
+  width: 160px;
+  font-size: 0.95rem;
 }
-#pokemons li {
+
+#search-clear {
+  margin-left: 0.4rem;
+  margin-top: 0.25rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.06);
+  cursor: pointer;
+}
+#search-clear:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+/* Table layout for pokemons */
+#pokemons-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: rgba(255,255,255,0.02);
+}
+#pokemons-table th,
+#pokemons-table td {
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 0.6rem 0.8rem;
+  vertical-align: middle;
+}
+#pokemons-table thead th {
+  background: rgba(255,255,255,0.03);
+  font-weight: 600;
+  text-align: left;
+}
+#pokemons-table td {
   text-align: center;
 }
-#pokemons img {
-  width: 80px;
-  height: auto;
+#pokemons-table td.cell-name {
+  text-align: left;
+  padding-left: 0.6rem;
+}
+#pokemons-table td.cell-image {
+  width: 56px;
+  text-align: center;
+}
+#pokemons-table td.cell-image img {
+  width: 48px;
+  height: 48px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 0.75rem;
+}
+
+.pagination button {
+  padding: 0.4rem 0.8rem;
+}
+
+.sort-btn {
+  margin-left: 0.35rem;
+  padding: 0.08rem 0.45rem;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.06);
+  cursor: pointer;
+}
+.sort-btn.active {
+  background: rgba(100,108,255,0.12);
+  border-color: rgba(100,108,255,0.35);
+}
+.sort-btn.active.asc {
+  color: #b6c6ff;
+}
+.sort-btn.active.desc {
+  color: #ffd6d6;
+}
+
+@media (max-width: 720px) {
+  #pokemons-table thead th:nth-child(n+4),
+  #pokemons-table td:nth-child(n+4) {
+    display: none;
+  }
+  #pokemons-table td.cell-name img {
+    width: 36px;
+    height: 36px;
+  }
 }
