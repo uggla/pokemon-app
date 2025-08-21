@@ -31,9 +31,13 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 2.4em;
+  line-height: 1.05;
 }
+
+.page-header { display:flex; align-items:center; gap:1rem; justify-content:center; margin-bottom: 0.6rem }
+.pokemon-logo { height: 4.4rem; width: auto; margin-right: 0.4rem }
+.title { font-size: 2.2rem; margin:0; }
 
 #app {
   max-width: 1280px;
@@ -47,11 +51,12 @@ h1 {
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
+  height: 3.2em;
+  padding: 0.6em;
   will-change: filter;
-  transition: filter 300ms;
+  transition: filter 220ms;
 }
+.logo.small { height: 1.6em; padding: 0.25em; opacity: 0.95 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
@@ -683,3 +688,16 @@ button:focus-visible {
 .shimmer-once::after {
   animation: shimmer 2.2s ease-in-out 1 forwards;
 }
+
+
+.app-footer {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:1rem;
+  margin-top:1.3rem;
+}
+.footer-left { display:flex; align-items:center; gap:0.6rem }
+.made-with { font-size:0.85rem; color:#cfcfcf }
+.footer-right { display:flex; align-items:center }
+.footer-counter .card { padding:0.15rem 0.4rem }
