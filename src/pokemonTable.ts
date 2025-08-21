@@ -1,4 +1,4 @@
-import { Pokemons, pokemons } from "./pokemons.ts";
+import { pokemons } from "./pokemons.ts";
 
 export async function setupPokemonTable(): Promise<void> {
   const tbody = document.querySelector<HTMLTableSectionElement>("#pokemons-body")!;
