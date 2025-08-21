@@ -1,4 +1,4 @@
-type Pokemon = {
+export type Pokemon = {
   pokedex_id: number;
   generation: number;
   category: string;
@@ -31,46 +31,24 @@ type Pokemon = {
 };
 
 export class Pokemons {
-  // static: you can call it without `new`
-  static async load(): Promise<Pokemon[]> {
+  private _all: Pokemon[] = [];
+
+  // static loader: creates an instance, fetches data and
+  // returns both the instance and the "original" list
+  static async load(): Promise<{ instance: Pokemons }> {
+    const inst = new Pokemons();
     const res = await fetch("https://tyradex.vercel.app/api/v1/pokemon");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return (await res.json()) as Pokemon[];
+    const loaded = (await res.json()) as Pokemon[];
+    inst._all = loaded.slice(1);
+    return { instance: inst };
   }
 
-  // instance store (only `load` remains static)
-  private _all: Pokemon[] | null = null;
-
-  setAllPokemons(list: Pokemon[]) {
-    this._all = list;
-  }
-
-  getAllPokemons(): Pokemon[] | null {
+  getAllPokemons(): Pokemon[] {
     return this._all;
   }
 
   getPokemonById(id: number): Pokemon | undefined {
-    if (!this._all) return undefined;
     return this._all.find(p => Number(p.pokedex_id) === Number(id));
   }
-
-  /**
-   * Load full list from remote, store it in the instance and
-   * return the "original" list used by the UI (same behaviour
-   * as before: slice off the first element when present).
-   */
-  async loadAndPrepareOriginalList(): Promise<Pokemon[]> {
-    const loaded = await Pokemons.load();
-    try {
-      this.setAllPokemons(loaded);
-    } catch (e) {
-      // ignore failures when storing
-    }
-    let original = loaded;
-    if (original.length > 0) original = original.slice(1);
-    return original;
-  }
 }
-
-// default exported instance for app-wide store usage
-export const pokemons = new Pokemons();

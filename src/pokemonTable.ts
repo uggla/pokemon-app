@@ -1,6 +1,7 @@
-import { pokemons } from "./pokemons.ts";
+import type { Pokemons } from "./pokemons.ts";
+import type { Pokemon } from "./pokemons.ts";
 
-export async function setupPokemonTable(): Promise<void> {
+export function setupPokemonTable(pokemons: Pokemons) {
   const tbody = document.querySelector<HTMLTableSectionElement>("#pokemons-body")!;
   const btnSortName = document.querySelector<HTMLButtonElement>("#sort-name")!;
   const btnSortCategory = document.querySelector<HTMLButtonElement>("#sort-category")!;
@@ -20,8 +21,7 @@ export async function setupPokemonTable(): Promise<void> {
   const PAGE_SIZE = 50;
   let currentPage = 1;
   let totalPages = 1;
-  let allPokemons: any[] = [];
-  let originalPokemons: any[] = [];
+  let allPokemons: Pokemon[] = [];
   // global sort state
   let currentSortKey: string | null = null;
   let currentSortDir: 'asc' | 'desc' | null = null;
@@ -67,7 +67,7 @@ export async function setupPokemonTable(): Promise<void> {
     });
   }
 
-  function renderPage(page: number) {
+  function renderTableBody(page: number) {
     const start = (page - 1) * PAGE_SIZE;
     const end = start + PAGE_SIZE;
     const slice = allPokemons.slice(start, end);
@@ -146,15 +146,12 @@ export async function setupPokemonTable(): Promise<void> {
       btn.textContent = currentSortDir === 'asc' ? '▲' : '▼';
     }
 
-    currentPage = 1; renderPage(currentPage);
+    currentPage = 1; renderTableBody(currentPage);
   }
 
   // initial load
   try {
-    const original = await pokemons.loadAndPrepareOriginalList() as any[];
-    // the instance already stored the full list; use the prepared original list
-    originalPokemons = original;
-    allPokemons = [...originalPokemons];
+    allPokemons = [...pokemons.getAllPokemons()];
     totalPages = Math.max(1, Math.ceil(allPokemons.length / PAGE_SIZE));
     currentPage = 1;
 
@@ -172,9 +169,9 @@ export async function setupPokemonTable(): Promise<void> {
     searchInput.addEventListener("input", () => {
       const q = searchInput.value.trim().toLowerCase();
       if (q === "") {
-        allPokemons = [...originalPokemons];
+        allPokemons = [...pokemons.getAllPokemons()];
       } else {
-        allPokemons = originalPokemons.filter(p => {
+        allPokemons = pokemons.getAllPokemons().filter(p => {
           const fr = (p.name && p.name.fr) ? String(p.name.fr).toLowerCase() : "";
           const en = (p.name && p.name.en) ? String(p.name.en).toLowerCase() : "";
           return fr.includes(q) || en.includes(q);
@@ -187,7 +184,7 @@ export async function setupPokemonTable(): Promise<void> {
 
     searchClear.addEventListener("click", () => {
       searchInput.value = "";
-      allPokemons = [...originalPokemons];
+      allPokemons = [...pokemons.getAllPokemons()];
       totalPages = Math.max(1, Math.ceil(allPokemons.length / PAGE_SIZE));
       currentPage = 1;
       applySortForKey('name', 'asc');
@@ -197,14 +194,14 @@ export async function setupPokemonTable(): Promise<void> {
     btnPrev.addEventListener("click", () => {
       if (currentPage > 1) {
         currentPage -= 1;
-        renderPage(currentPage);
+        renderTableBody(currentPage);
       }
     });
 
     btnNext.addEventListener("click", () => {
       if (currentPage < totalPages) {
         currentPage += 1;
-        renderPage(currentPage);
+        renderTableBody(currentPage);
       }
     });
 
@@ -215,10 +212,10 @@ export async function setupPokemonTable(): Promise<void> {
     genSelect.addEventListener('change', () => {
       const v = genSelect.value;
       if (v === '') {
-        allPokemons = [...originalPokemons];
+        allPokemons = [...pokemons.getAllPokemons()];
       } else {
         const g = Number(v);
-        allPokemons = originalPokemons.filter(p => Number(p.generation) === g);
+        allPokemons = pokemons.getAllPokemons().filter(p => Number(p.generation) === g);
       }
       totalPages = Math.max(1, Math.ceil(allPokemons.length / PAGE_SIZE));
       currentPage = 1;

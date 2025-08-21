@@ -5,6 +5,7 @@ import { setupCounter } from "./counter.ts";
 import { setupPokemonTable } from "./pokemonTable.ts";
 import { setupPokemonChart } from './pokemonChart.ts';
 import { setupPokemonModal } from './pokemonModal.ts';
+import { Pokemons } from './pokemons.ts';
 
 window.addEventListener("load", () => {
   document.body.style.display = "block";
@@ -110,7 +111,10 @@ setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
 
 document.querySelector<HTMLDivElement>("#mypara")!.innerHTML = `<p>Here are pokemons !</p>`;
 
-// initialize modal first, then chart so it can receive events
-setupPokemonModal();
+// create Pokemons instance
+const { instance: pokemons } = await Pokemons.load();
+
+// initialize modal (needs instance for evolution lookups), then chart then table
+setupPokemonModal(pokemons);
 setupPokemonChart();
-await setupPokemonTable();
+setupPokemonTable(pokemons);

@@ -1,6 +1,6 @@
-import { pokemons } from './pokemons.ts';
+import type { Pokemons } from './pokemons.ts';
 
-export function setupPokemonModal() {
+export function setupPokemonModal(pokemons: Pokemons) {
   // create overlay
   const overlay = document.createElement('div');
   overlay.id = 'pokemon-modal-overlay';
@@ -71,7 +71,7 @@ export function setupPokemonModal() {
         tEl.className = 'type-badge';
         const imgT = document.createElement('img');
         imgT.src = t.image || '';
-        imgT.alt = t.name || ''; 
+        imgT.alt = t.name || '';
         imgT.width = 20;
         imgT.height = 20;
         const span = document.createElement('span');
@@ -84,8 +84,8 @@ export function setupPokemonModal() {
 
     // stats -> render as radar SVG
     function buildRadar(stats: any) {
-      const labels = ['HP','ATK','DEF','SPA','SPD','VIT'];
-      const keys = ['hp','atk','def','spe_atk','spe_def','vit'];
+      const labels = ['HP', 'ATK', 'DEF', 'SPA', 'SPD', 'VIT'];
+      const keys = ['hp', 'atk', 'def', 'spe_atk', 'spe_def', 'vit'];
       const vals = keys.map(k => Number(stats?.[k] ?? 0));
       const maxVal = Math.max(255, ...vals);
       const vw = 400;
@@ -169,7 +169,7 @@ export function setupPokemonModal() {
       return wrap;
     }
 
-const statsWrap = buildRadar(p.stats || {});
+    const statsWrap = buildRadar(p.stats || {});
 
     // (talents removed per request)
 
@@ -264,7 +264,7 @@ const statsWrap = buildRadar(p.stats || {});
     if (Array.isArray(preList) && preList.length > 0) {
       // keep the original order: oldest -> ... -> immediate pre-evo
       const revPre = Array.from(preList);
-      for (let i=0;i<revPre.length;i++) {
+      for (let i = 0; i < revPre.length; i++) {
         const e = revPre[i];
         const caption = (typeof e.name === 'string') ? e.name : (e && e.name && (e.name.fr || e.name.en) ? (e.name.fr || e.name.en) : '');
         if (e && e.sprites && e.sprites.regular) {
@@ -272,33 +272,33 @@ const statsWrap = buildRadar(p.stats || {});
         } else if (e && typeof e.pokedex_id === 'number') {
           const placeholder = createEvoItem('', caption, e);
           preContainer.appendChild(placeholder);
-                      // try to lookup in the global list instead of calling API
-            try {
-              const found = pokemons.getPokemonById(Number(e.pokedex_id));
-              if (found) {
-                const img = found.sprites?.regular || '';
-                const nm = (found.name?.fr) ? found.name.fr : (found.name?.en ? found.name.en : caption);
-                const imgEl = placeholder.querySelector('img') as HTMLImageElement | null;
-                const capEl = placeholder.querySelector('.evo-caption');
-                if (imgEl && img) imgEl.src = img;
-                if (capEl && nm) capEl.textContent = nm;
-              }
-            } catch (err) {
-              // ignore
+          // try to lookup in the global list instead of calling API
+          try {
+            const found = pokemons.getPokemonById(Number(e.pokedex_id));
+            if (found) {
+              const img = found.sprites?.regular || '';
+              const nm = (found.name?.fr) ? found.name.fr : (found.name?.en ? found.name.en : caption);
+              const imgEl = placeholder.querySelector('img') as HTMLImageElement | null;
+              const capEl = placeholder.querySelector('.evo-caption');
+              if (imgEl && img) imgEl.src = img;
+              if (capEl && nm) capEl.textContent = nm;
             }
+          } catch (err) {
+            // ignore
+          }
         } else {
           preContainer.appendChild(createEvoItem('', caption));
         }
         // add small arrow between pre items if not last
         if (i < revPre.length - 1) {
-          const small = document.createElement('div'); small.className='evo-arrow-small'; small.textContent='→'; preContainer.appendChild(small);
+          const small = document.createElement('div'); small.className = 'evo-arrow-small'; small.textContent = '→'; preContainer.appendChild(small);
         }
       }
     }
 
     // load next evolutions
     if (Array.isArray(nextList) && nextList.length > 0) {
-      for (let i=0;i<nextList.length;i++) {
+      for (let i = 0; i < nextList.length; i++) {
         const e = nextList[i];
         const caption = (typeof e.name === 'string') ? e.name : (e && e.name && (e.name.fr || e.name.en) ? (e.name.fr || e.name.en) : '');
         if (e && e.sprites && e.sprites.regular) {
@@ -306,33 +306,33 @@ const statsWrap = buildRadar(p.stats || {});
         } else if (e && typeof e.pokedex_id === 'number') {
           const placeholder = createEvoItem('', caption, e);
           nextContainer.appendChild(placeholder);
-                      // try to lookup in the global list instead of calling API
-            try {
-              const found = pokemons.getPokemonById(Number(e.pokedex_id));
-              if (found) {
-                const img = found.sprites?.regular || '';
-                const nm = (found.name?.fr) ? found.name.fr : (found.name?.en ? found.name.en : caption);
-                const imgEl = placeholder.querySelector('img') as HTMLImageElement | null;
-                const capEl = placeholder.querySelector('.evo-caption');
-                if (imgEl && img) imgEl.src = img;
-                if (capEl && nm) capEl.textContent = nm;
-              }
-            } catch (err) {
-              // ignore
+          // try to lookup in the global list instead of calling API
+          try {
+            const found = pokemons.getPokemonById(Number(e.pokedex_id));
+            if (found) {
+              const img = found.sprites?.regular || '';
+              const nm = (found.name?.fr) ? found.name.fr : (found.name?.en ? found.name.en : caption);
+              const imgEl = placeholder.querySelector('img') as HTMLImageElement | null;
+              const capEl = placeholder.querySelector('.evo-caption');
+              if (imgEl && img) imgEl.src = img;
+              if (capEl && nm) capEl.textContent = nm;
             }
+          } catch (err) {
+            // ignore
+          }
         } else {
           nextContainer.appendChild(createEvoItem('', caption));
         }
         // add small arrow between next items if not last
         if (i < nextList.length - 1) {
-          const small = document.createElement('div'); small.className='evo-arrow-small'; small.textContent='→'; nextContainer.appendChild(small);
+          const small = document.createElement('div'); small.className = 'evo-arrow-small'; small.textContent = '→'; nextContainer.appendChild(small);
         }
       }
     }
 
     // arrows and assembly
-    const leftArrow = document.createElement('div'); leftArrow.className='evo-arrow evo-arrow-left'; leftArrow.textContent = preList.length > 0 ? '→' : '';
-    const rightArrow = document.createElement('div'); rightArrow.className='evo-arrow evo-arrow-right'; rightArrow.textContent = nextList.length > 0 ? '→' : '';
+    const leftArrow = document.createElement('div'); leftArrow.className = 'evo-arrow evo-arrow-left'; leftArrow.textContent = preList.length > 0 ? '→' : '';
+    const rightArrow = document.createElement('div'); rightArrow.className = 'evo-arrow evo-arrow-right'; rightArrow.textContent = nextList.length > 0 ? '→' : '';
 
     evoWrap.appendChild(preContainer);
     evoWrap.appendChild(leftArrow);
