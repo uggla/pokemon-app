@@ -14,7 +14,6 @@ it("getAllPokemons test", async () => {
 });
 
 it("fails http response 404", async () => {
-  const fake: Pokemon[] = [{ pokedex_id: 0 }, { pokedex_id: 4 }];
   const fetchMock: typeof fetch = async () =>
     new Response(null, { status: 404 }) as any;
 
