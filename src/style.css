@@ -86,25 +86,25 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
+/* @media (prefers-color-scheme: light) { */
+/*   :root { */
+/*     color: #213547; */
+/*     background-color: #ffffff; */
+/*   } */
+/*   a:hover { */
+/*     color: #747bff; */
+/*   } */
+/*   button { */
+/*     background-color: #f9f9f9; */
+/*   } */
+/* } */
 
 #search-name {
   margin-left: 0.5rem;
   margin-top: 0.25rem;
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
-  border: 1px solid rgba(0,0,0,0.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   width: 160px;
   font-size: 0.95rem;
 }
@@ -116,11 +116,11 @@ button:focus-visible {
   border-radius: 6px;
   font-size: 0.95rem;
   background: transparent;
-  border: 1px solid rgba(0,0,0,0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   cursor: pointer;
 }
 #search-clear:hover {
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 /* Table layout for pokemons */
@@ -128,16 +128,16 @@ button:focus-visible {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
 }
 #pokemons-table th,
 #pokemons-table td {
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 0.6rem 0.8rem;
   vertical-align: middle;
 }
 #pokemons-table thead th {
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
   font-weight: 600;
   text-align: left;
 }
@@ -174,12 +174,12 @@ button:focus-visible {
   padding: 0.08rem 0.45rem;
   border-radius: 6px;
   background: transparent;
-  border: 1px solid rgba(0,0,0,0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   cursor: pointer;
 }
 .sort-btn.active {
-  background: rgba(100,108,255,0.12);
-  border-color: rgba(100,108,255,0.35);
+  background: rgba(100, 108, 255, 0.12);
+  border-color: rgba(100, 108, 255, 0.35);
 }
 .sort-btn.active.asc {
   color: #b6c6ff;
@@ -194,20 +194,36 @@ button:focus-visible {
     padding: 0.75rem 0.85rem;
   }
 
-  .modal-header-row { 
+  .modal-header-row {
     flex-direction: column;
     gap: 0.5rem;
     align-items: center;
   }
 
-  .modal-header { flex-direction: row; gap: 0.6rem; align-items:center; }
-  .modal-sprite { width: 72px; height:72px; }
-  .modal-titles h2 { font-size: 1.25rem; }
+  .modal-header {
+    flex-direction: row;
+    gap: 0.6rem;
+    align-items: center;
+  }
+  .modal-sprite {
+    width: 72px;
+    height: 72px;
+  }
+  .modal-titles h2 {
+    font-size: 1.25rem;
+  }
 
-  .modal-header-row .modal-stats { width: 100%; margin: 0; }
-  .modal-stats { font-size: 0.9rem; }
+  .modal-header-row .modal-stats {
+    width: 100%;
+    margin: 0;
+  }
+  .modal-stats {
+    font-size: 0.9rem;
+  }
 
-  .modal-info { margin-top: 0; }
+  .modal-info {
+    margin-top: 0;
+  }
 
   /* make evolution row horizontally scrollable on small screens */
   .modal-evolution {
@@ -216,14 +232,41 @@ button:focus-visible {
     white-space: nowrap;
     padding: 0.5rem 0;
   }
-  .modal-evolution > * { display: inline-block; vertical-align: middle; }
-  .evo-side, .evo-center, .evo-next, .evo-pre { display: inline-flex; vertical-align: middle; }
-  .evo-side, .evo-center { gap: 0.5rem; }
-  .evo-item { display: inline-flex; flex-direction: column; gap: 0.12rem; margin-right: 0.65rem; align-items:center; }
-  .evo-target, .evo-current { width:56px; height:56px; }
-  .evo-caption { max-width:72px; font-size:0.8rem; }
+  .modal-evolution > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .evo-side,
+  .evo-center,
+  .evo-next,
+  .evo-pre {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+  .evo-side,
+  .evo-center {
+    gap: 0.5rem;
+  }
+  .evo-item {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.12rem;
+    margin-right: 0.65rem;
+    align-items: center;
+  }
+  .evo-target,
+  .evo-current {
+    width: 56px;
+    height: 56px;
+  }
+  .evo-caption {
+    max-width: 72px;
+    font-size: 0.8rem;
+  }
 
-  .modal-info { margin-top: 0; }
+  .modal-info {
+    margin-top: 0;
+  }
 }
 
 /* Very small screens: stack evolution items vertically */
@@ -237,13 +280,25 @@ button:focus-visible {
     gap: 0.4rem;
     align-items: flex-start;
   }
-  .modal-sprite { width: 56px; height:56px; }
-  .modal-titles h2 { font-size: 1.05rem; }
+  .modal-sprite {
+    width: 56px;
+    height: 56px;
+  }
+  .modal-titles h2 {
+    font-size: 1.05rem;
+  }
 
-  .modal-header-row .modal-stats { width: 100%; margin: 0 0 0 0; }
-  .modal-stats { font-size: 0.85rem; }
+  .modal-header-row .modal-stats {
+    width: 100%;
+    margin: 0 0 0 0;
+  }
+  .modal-stats {
+    font-size: 0.85rem;
+  }
 
-  .modal-info { margin-top: 0; }
+  .modal-info {
+    margin-top: 0;
+  }
 
   .modal-evolution {
     display: flex;
@@ -251,29 +306,47 @@ button:focus-visible {
     gap: 0.5rem;
     padding: 0.25rem 0;
   }
-  .evo-side, .evo-center, .evo-next, .evo-pre { display:flex; width:100%; align-items:center; }
-  .evo-item { width:100%; flex-direction:row; gap:0.6rem; align-items:center; }
-  .evo-target, .evo-current { width:64px; height:64px; }
-  .evo-caption { max-width: calc(100% - 80px); font-size:0.9rem; text-align:left; }
+  .evo-side,
+  .evo-center,
+  .evo-next,
+  .evo-pre {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+  .evo-item {
+    width: 100%;
+    flex-direction: row;
+    gap: 0.6rem;
+    align-items: center;
+  }
+  .evo-target,
+  .evo-current {
+    width: 64px;
+    height: 64px;
+  }
+  .evo-caption {
+    max-width: calc(100% - 80px);
+    font-size: 0.9rem;
+    text-align: left;
+  }
 }
-
 
 #pokemon-chart svg {
   max-width: 100%;
   height: auto;
-  background: rgba(0,0,0,0.02);
+  background: rgba(0, 0, 0, 0.02);
   border-radius: 6px;
 }
 .chart-point-image {
-  filter: drop-shadow(0 0 4px rgba(0,0,0,0.4));
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.4));
 }
-
 
 /* Modal overlay for pokemon details */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -284,7 +357,7 @@ button:focus-visible {
   display: none;
 }
 .modal-card {
-  background: var(--card-bg, rgba(20,20,20,0.98));
+  background: var(--card-bg, rgba(20, 20, 20, 0.98));
   border-radius: 10px;
   max-width: 1100px;
   width: 100%;
@@ -292,7 +365,7 @@ button:focus-visible {
   overflow: auto;
   position: relative;
   padding: 1.25rem 1.5rem 1.5rem 1.5rem;
-  box-shadow: 0 12px 48px rgba(0,0,0,0.7);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7);
 }
 .modal-close {
   position: absolute;
@@ -304,79 +377,223 @@ button:focus-visible {
   font-size: 1.2rem;
   cursor: pointer;
 }
-.modal-content { text-align: left; }
-.modal-header { display:flex; gap:0.75rem; align-items:center; margin-bottom:0.5rem; }
-.modal-sprite { width:128px; height:128px; object-fit:contain; }
+.modal-content {
+  text-align: left;
+}
+.modal-header {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.modal-sprite {
+  width: 128px;
+  height: 128px;
+  object-fit: contain;
+  display: block;
+}
 
-.modal-sprite-wrap { position: relative; display: inline-block; }
-.modal-sprite { display: block; }
+.modal-sprite-wrap {
+  position: relative;
+  display: inline-block;
+}
 
 /* shimmer animation: moving light band */
 .modal-sprite-wrap::after {
-  content: '';
+  content: "";
   position: absolute;
   top: -10%;
   left: -60%;
   width: 40%;
   height: 120%;
-  background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
   transform: skewX(-20deg);
   filter: blur(6px);
-  opacity: 0.0;
+  opacity: 0;
   pointer-events: none;
   /* animation is triggered via class to play once on open */
 }
 
 @keyframes shimmer {
-  0% { left: -60%; opacity: 0; }
-  10% { opacity: 0.25; }
-  50% { left: 120%; opacity: 0.6; }
-  90% { opacity: 0.15; }
-  100% { left: 120%; opacity: 0; }
+  0% {
+    left: -100%;
+    opacity: 0.6;
+  }
+  80% {
+    opacity: 0.6;
+  }
+  100% {
+    left: 120%;
+    opacity: 0;
+  }
 }
 
-.modal-titles h2 { margin:0; font-size:1.75rem; }
-.modal-titles .muted { color: #bbb; font-size:0.95rem; }
-.modal-meta { display:flex; gap:1rem; margin-bottom:0.25rem; color:#ddd; }
+.modal-titles h2 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+.modal-titles .muted {
+  color: #bbb;
+  font-size: 0.95rem;
+}
+.modal-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+  color: #ddd;
+}
 
-.modal-info { display:flex; flex-direction:column; gap:0.25rem; align-items:flex-start; margin-top: -6.5rem; margin-bottom:0.5rem; }
-.modal-names { margin:0; }
+.modal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: flex-start;
+  margin-top: -6.5rem;
+  margin-bottom: 0.5rem;
+}
+.modal-names {
+  margin: 0;
+}
 
-.modal-types { display:flex; gap:0.5rem; margin-bottom:0.75rem; }
-.type-badge { display:flex; gap:0.4rem; align-items:center; background:rgba(255,255,255,0.03); padding:0.25rem 0.5rem; border-radius:6px; }
-.modal-stats { border-collapse: collapse; width:100%; margin-bottom:0.75rem; }
-.modal-stats th, .modal-stats td { border:1px solid rgba(255,255,255,0.04); padding:0.4rem 0.6rem; }
-.modal-talents ul { margin:0; padding-left:1.2rem; }
+.modal-types {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.type-badge {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+}
+.modal-stats {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+.modal-stats th,
+.modal-stats td {
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 0.4rem 0.6rem;
+}
+.modal-talents ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
 
-.modal-names ul { margin:0 0 0.75rem 1rem; padding:0; }
-.modal-names li { list-style: disc; color:#ddd; margin:0.15rem 0; }
+.modal-names ul {
+  margin: 0 0 0.75rem 1rem;
+  padding: 0;
+}
+.modal-names li {
+  list-style: disc;
+  color: #ddd;
+  margin: 0.15rem 0;
+}
 
-.modal-evolution { display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem; }
-.evo-current { width:96px; height:96px; object-fit:contain; border-radius:8px; }
-.evo-arrow { font-size:2rem; color:#bbb; }
-.evo-targets { display:flex; gap:0.5rem; align-items:center; }
-.evo-target { width:72px; height:72px; object-fit:contain; border-radius:6px; }
+.modal-evolution {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.evo-current {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+.evo-arrow {
+  font-size: 2rem;
+  color: #bbb;
+}
+.evo-targets {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.evo-target {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  border-radius: 6px;
+}
 
-.evo-arrow-small { display:inline-flex; align-items:center; justify-content:center; color:#bbb; font-size:1.1rem; margin:0 0.3rem; }
-.evo-arrow-small-left { transform: scaleX(-1); }
-.evo-arrow svg, .evo-arrow-small svg { display:block; color: #bbb; }
-.evo-arrow { display:inline-flex; align-items:center; justify-content:center; }
-
+.evo-arrow-small {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #bbb;
+  font-size: 1.1rem;
+  margin: 0 0.3rem;
+}
+.evo-arrow-small-left {
+  transform: scaleX(-1);
+}
+.evo-arrow svg,
+.evo-arrow-small svg {
+  display: block;
+  color: #bbb;
+}
+.evo-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
 /* make table images clickable */
-#pokemons-table td.cell-image img { cursor: pointer; }
+#pokemons-table td.cell-image img {
+  cursor: pointer;
+}
 
-
-.evo-item { display:flex; flex-direction:column; align-items:center; gap:0.12rem; }
-.evo-caption { font-size:0.85rem; color:#ddd; max-width:96px; text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.evo-side { display:flex; gap:0.5rem; align-items:center; }
-.evo-center { display:flex; gap:0.5rem; align-items:center; }
+.evo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.12rem;
+}
+.evo-caption {
+  font-size: 0.85rem;
+  color: #ddd;
+  max-width: 96px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.evo-side {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.evo-center {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
 
 /* header row to place stats to the right */
-.modal-header-row { display:flex; gap:0.6rem; align-items:flex-start; justify-content:space-between; padding-right:1rem; }
-.modal-header-row .modal-header { margin-bottom:0; }
-.modal-header-row .modal-stats { width: 240px; margin:0 3.5rem 0 0; }
-
+.modal-header-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-right: 1rem;
+}
+.modal-header-row .modal-header {
+  margin-bottom: 0;
+}
+.modal-header-row .modal-stats {
+  width: 240px;
+  margin: 0 3.5rem 0 0;
+}
 
 /* Responsive adjustments for small screens */
 @media (max-width: 720px) {
@@ -385,20 +602,36 @@ button:focus-visible {
     padding: 0.75rem 0.85rem;
   }
 
-  .modal-header-row { 
+  .modal-header-row {
     flex-direction: column;
     gap: 0.5rem;
     align-items: center;
   }
 
-  .modal-header { flex-direction: row; gap: 0.6rem; align-items:center; }
-  .modal-sprite { width: 72px; height:72px; }
-  .modal-titles h2 { font-size: 1.25rem; }
+  .modal-header {
+    flex-direction: row;
+    gap: 0.6rem;
+    align-items: center;
+  }
+  .modal-sprite {
+    width: 72px;
+    height: 72px;
+  }
+  .modal-titles h2 {
+    font-size: 1.25rem;
+  }
 
-  .modal-header-row .modal-stats { width: 100%; margin: 0; }
-  .modal-stats { font-size: 0.9rem; }
+  .modal-header-row .modal-stats {
+    width: 100%;
+    margin: 0;
+  }
+  .modal-stats {
+    font-size: 0.9rem;
+  }
 
-  .modal-info { margin-top: 0; }
+  .modal-info {
+    margin-top: 0;
+  }
 
   /* stack evolution items vertically on small screens */
   .modal-evolution {
@@ -408,18 +641,43 @@ button:focus-visible {
     overflow-x: hidden;
     padding: 0.25rem 0;
   }
-  .evo-side, .evo-center, .evo-next, .evo-pre {
+  .evo-side,
+  .evo-center,
+  .evo-next,
+  .evo-pre {
     display: flex;
     width: 100%;
     align-items: center;
   }
-  .evo-item { margin: 0; width: 100%; flex-direction: row; gap: 0.75rem; align-items: center; }
-  .evo-item img { flex: 0 0 auto; }
-  .evo-caption { max-width: calc(100% - 88px); font-size:0.9rem; text-align: left; }
-  .evo-target, .evo-current { width:72px; height:72px; }
-  .evo-side .evo-item, .evo-center .evo-item, .evo-next .evo-item { display:flex; }
-  
-  .modal-info { margin-top: 0; }
+  .evo-item {
+    margin: 0;
+    width: 100%;
+    flex-direction: row;
+    gap: 0.75rem;
+    align-items: center;
+  }
+  .evo-item img {
+    flex: 0 0 auto;
+  }
+  .evo-caption {
+    max-width: calc(100% - 88px);
+    font-size: 0.9rem;
+    text-align: left;
+  }
+  .evo-target,
+  .evo-current {
+    width: 72px;
+    height: 72px;
+  }
+  .evo-side .evo-item,
+  .evo-center .evo-item,
+  .evo-next .evo-item {
+    display: flex;
+  }
+
+  .modal-info {
+    margin-top: 0;
+  }
 }
 
 .shimmer-once::after {
