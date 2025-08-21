@@ -1,6 +1,6 @@
-# Tyradex Pokemons UI (Vite + TypeScript)
+# Pokemon App — Tyradex Pokemons UI (Vite + TypeScript)
 
-Small frontend app to browse a Pokemon dataset (built with Vite + TypeScript). This repository contains the UI, a small in-memory store and utilities, tests driven with Vitest, and a few DOM-driven components (table, chart, modal).
+Small frontend app ("pokemon-app") to browse a Pokemon dataset (built with Vite + TypeScript). This repository contains the UI, a small in-memory store and utilities, tests driven with Vitest, and a few DOM-driven components (table, chart, modal).
 
 ## Quick start
 
