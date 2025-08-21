@@ -2,7 +2,6 @@ import "./style.css";
 import typescriptLogo from "/typescript.svg";
 import viteLogo from "/vite.svg";
 import pokemonLogo from "/International_Pokémon_logo.svg";
-import { setupCounter } from "./counter.ts";
 import { setupPokemonTable } from "./pokemonTable.ts";
 import { setupPokemonChart } from './pokemonChart.ts';
 import { setupPokemonModal } from './pokemonModal.ts';
@@ -101,19 +100,10 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     <div id="pokemon-chart" style="margin-top:1rem; display:flex; justify-content:center;"></div>
 
     <footer class="app-footer">
-      <div class="footer-left">
-        <a href="https://vite.dev" target="_blank"><img src="${viteLogo}" class="logo small" alt="Vite logo" /></a>
-        <a href="https://www.typescriptlang.org/" target="_blank"><img src="${typescriptLogo}" class="logo small vanilla" alt="TypeScript logo" /></a>
-        <div class="made-with">made with ❤️ with Vite + TypeScript</div>
-      </div>
-      <div class="footer-right">
-        <div class="card footer-counter"><button id="counter" type="button"></button></div>
-      </div>
+      <div class="made-with">Made with ❤️ with Vite <img src="${viteLogo}" class="logo small inline" alt="Vite" /> + TypeScript <img src="${typescriptLogo}" class="logo small vanilla inline" alt="TS" /></div>
     </footer>
   </div>
 `;
-
-setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
 
 document.querySelector<HTMLDivElement>("#mypara")!.innerHTML = `<p>Here are pokemons !</p>`;
 
