@@ -15,7 +15,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
     <header class="page-header">
       <img src="${pokemonLogo}" alt="Pokemon logo" class="pokemon-logo" />
-      <h1 class="title">Pokemon App</h1>
     </header>
     <main>
       <div id="mypara"></div>
