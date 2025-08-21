@@ -38,3 +38,20 @@ export class Pokemons {
     return (await res.json()) as Pokemon[];
   }
 }
+
+
+// simple in-memory store previously located in `src/pokemonStore.ts`
+let _allPokemons: Pokemon[] | null = null;
+
+export function setAllPokemons(list: Pokemon[]) {
+  _allPokemons = list;
+}
+
+export function getAllPokemons(): Pokemon[] | null {
+  return _allPokemons;
+}
+
+export function getPokemonById(id: number): Pokemon | undefined {
+  if (!_allPokemons) return undefined;
+  return _allPokemons.find(p => Number(p.pokedex_id) === Number(id));
+}
