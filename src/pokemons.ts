@@ -38,18 +38,22 @@ export class Pokemons {
     return (await res.json()) as Pokemon[];
   }
 
-  private static _all: Pokemon[] | null = null;
+  // instance store (only `load` remains static)
+  private _all: Pokemon[] | null = null;
 
-  static setAllPokemons(list: Pokemon[]) {
-    Pokemons._all = list;
+  setAllPokemons(list: Pokemon[]) {
+    this._all = list;
   }
 
-  static getAllPokemons(): Pokemon[] | null {
-    return Pokemons._all;
+  getAllPokemons(): Pokemon[] | null {
+    return this._all;
   }
 
-  static getPokemonById(id: number): Pokemon | undefined {
-    if (!Pokemons._all) return undefined;
-    return Pokemons._all.find(p => Number(p.pokedex_id) === Number(id));
+  getPokemonById(id: number): Pokemon | undefined {
+    if (!this._all) return undefined;
+    return this._all.find(p => Number(p.pokedex_id) === Number(id));
   }
 }
+
+// default exported instance for app-wide store usage
+export const pokemons = new Pokemons();
