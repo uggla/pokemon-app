@@ -53,6 +53,23 @@ export class Pokemons {
     if (!this._all) return undefined;
     return this._all.find(p => Number(p.pokedex_id) === Number(id));
   }
+
+  /**
+   * Load full list from remote, store it in the instance and
+   * return the "original" list used by the UI (same behaviour
+   * as before: slice off the first element when present).
+   */
+  async loadAndPrepareOriginalList(): Promise<Pokemon[]> {
+    const loaded = await Pokemons.load();
+    try {
+      this.setAllPokemons(loaded);
+    } catch (e) {
+      // ignore failures when storing
+    }
+    let original = loaded;
+    if (original.length > 0) original = original.slice(1);
+    return original;
+  }
 }
 
 // default exported instance for app-wide store usage
