@@ -151,11 +151,9 @@ export async function setupPokemonTable(): Promise<void> {
 
   // initial load
   try {
-    const loaded = await Pokemons.load() as any[];
-    // store full list in dedicated store
-    try { pokemons.setAllPokemons(loaded); } catch (e) { /* ignore */ }
-    originalPokemons = loaded;
-    if (originalPokemons.length > 0) originalPokemons = originalPokemons.slice(1);
+    const original = await pokemons.loadAndPrepareOriginalList() as any[];
+    // the instance already stored the full list; use the prepared original list
+    originalPokemons = original;
     allPokemons = [...originalPokemons];
     totalPages = Math.max(1, Math.ceil(allPokemons.length / PAGE_SIZE));
     currentPage = 1;
