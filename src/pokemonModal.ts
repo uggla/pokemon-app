@@ -1,4 +1,4 @@
-import { getPokemonById } from './pokemons.ts';
+import { Pokemons } from './pokemons.ts';
 
 export function setupPokemonModal() {
   // create overlay
@@ -241,7 +241,7 @@ const statsWrap = buildRadar(p.stats || {});
             // otherwise try to lookup by pokedex_id from global list
             if (typeof evoData.pokedex_id === 'number') {
               try {
-                const found = getPokemonById(evoData.pokedex_id);
+                const found = Pokemons.getPokemonById(evoData.pokedex_id);
                 if (found) renderPokemon(found);
               } catch (_) { /* ignore */ }
               return;
@@ -274,7 +274,7 @@ const statsWrap = buildRadar(p.stats || {});
           preContainer.appendChild(placeholder);
                       // try to lookup in the global list instead of calling API
             try {
-              const found = getPokemonById(Number(e.pokedex_id));
+              const found = Pokemons.getPokemonById(Number(e.pokedex_id));
               if (found) {
                 const img = found.sprites?.regular || '';
                 const nm = (found.name?.fr) ? found.name.fr : (found.name?.en ? found.name.en : caption);
@@ -308,7 +308,7 @@ const statsWrap = buildRadar(p.stats || {});
           nextContainer.appendChild(placeholder);
                       // try to lookup in the global list instead of calling API
             try {
-              const found = getPokemonById(Number(e.pokedex_id));
+              const found = Pokemons.getPokemonById(Number(e.pokedex_id));
               if (found) {
                 const img = found.sprites?.regular || '';
                 const nm = (found.name?.fr) ? found.name.fr : (found.name?.en ? found.name.en : caption);
