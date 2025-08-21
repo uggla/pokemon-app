@@ -1,4 +1,4 @@
-import { getPokemonById } from './pokemonStore.ts';
+import { getPokemonById } from './pokemons.ts';
 
 export function setupPokemonModal() {
   // create overlay
