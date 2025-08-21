@@ -37,21 +37,19 @@ export class Pokemons {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return (await res.json()) as Pokemon[];
   }
-}
 
+  private static _all: Pokemon[] | null = null;
 
-// simple in-memory store previously located in `src/pokemonStore.ts`
-let _allPokemons: Pokemon[] | null = null;
+  static setAllPokemons(list: Pokemon[]) {
+    Pokemons._all = list;
+  }
 
-export function setAllPokemons(list: Pokemon[]) {
-  _allPokemons = list;
-}
+  static getAllPokemons(): Pokemon[] | null {
+    return Pokemons._all;
+  }
 
-export function getAllPokemons(): Pokemon[] | null {
-  return _allPokemons;
-}
-
-export function getPokemonById(id: number): Pokemon | undefined {
-  if (!_allPokemons) return undefined;
-  return _allPokemons.find(p => Number(p.pokedex_id) === Number(id));
+  static getPokemonById(id: number): Pokemon | undefined {
+    if (!Pokemons._all) return undefined;
+    return Pokemons._all.find(p => Number(p.pokedex_id) === Number(id));
+  }
 }
