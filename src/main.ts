@@ -104,7 +104,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   </div>
 `;
 
-document.querySelector<HTMLDivElement>("#mypara")!.innerHTML = `<p>Here are pokemons !</p>`;
+document.querySelector<HTMLDivElement>("#mypara")!.innerHTML = `<p>Here are Pokemons !</p>`;
 
 // create Pokemons instance
 const pokemons: Pokemons = await Pokemons.load();

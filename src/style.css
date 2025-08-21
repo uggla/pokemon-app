@@ -37,6 +37,21 @@ h1 {
 
 .page-header { display:flex; align-items:center; gap:1rem; justify-content:center; margin-bottom: 0.6rem }
 .pokemon-logo { height: 9.6rem; width: auto; margin: 0 0 0.8rem 0; }
+
+/* subtle entrance animation for the header logo */
+@keyframes header-entrance {
+  0% { opacity: 0; transform: translateY(-8px) scale(0.92); }
+  60% { opacity: 1; transform: translateY(2px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.pokemon-logo {
+  animation: header-entrance 700ms cubic-bezier(.2,.9,.2,1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pokemon-logo { animation: none !important; }
+}
+
 .title { font-size: 2.2rem; margin:0; }
 
 #app {
