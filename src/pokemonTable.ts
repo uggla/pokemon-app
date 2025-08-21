@@ -1,4 +1,4 @@
-import { Pokemons } from "./pokemons.ts";
+import { Pokemons, pokemons } from "./pokemons.ts";
 
 export async function setupPokemonTable(): Promise<void> {
   const tbody = document.querySelector<HTMLTableSectionElement>("#pokemons-body")!;
@@ -153,7 +153,7 @@ export async function setupPokemonTable(): Promise<void> {
   try {
     const loaded = await Pokemons.load() as any[];
     // store full list in dedicated store
-    try { Pokemons.setAllPokemons(loaded); } catch (e) { /* ignore */ }
+    try { pokemons.setAllPokemons(loaded); } catch (e) { /* ignore */ }
     originalPokemons = loaded;
     if (originalPokemons.length > 0) originalPokemons = originalPokemons.slice(1);
     allPokemons = [...originalPokemons];
