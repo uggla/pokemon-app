@@ -53,7 +53,7 @@ describe('setupPokemonChart', () => {
     window.dispatchEvent(new CustomEvent('pokemons:visible', { detail: pokes }));
     const img = document.querySelector('#pokemon-chart svg image.chart-point-image') as HTMLElement;
     expect(img).toBeTruthy();
-    img.click();
+    img.dispatchEvent(new MouseEvent("click"));
     expect(listener).toHaveBeenCalled();
   });
 
