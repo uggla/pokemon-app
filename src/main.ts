@@ -112,7 +112,7 @@ setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
 document.querySelector<HTMLDivElement>("#mypara")!.innerHTML = `<p>Here are pokemons !</p>`;
 
 // create Pokemons instance
-const { instance: pokemons } = await Pokemons.load();
+const pokemons: Pokemons = await Pokemons.load();
 
 // initialize modal (needs instance for evolution lookups), then chart then table
 setupPokemonModal(pokemons);

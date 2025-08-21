@@ -1,3 +1,5 @@
+const URL = "https://tyradex.vercel.app/api/v1/pokemon";
+
 export type Pokemon = {
   pokedex_id: number;
   generation: number;
@@ -35,13 +37,13 @@ export class Pokemons {
 
   // static loader: creates an instance, fetches data and
   // returns both the instance and the "original" list
-  static async load(): Promise<{ instance: Pokemons }> {
+  static async load(fetchFn: typeof fetch = fetch): Promise<Pokemons> {
     const inst = new Pokemons();
-    const res = await fetch("https://tyradex.vercel.app/api/v1/pokemon");
+    const res = await fetchFn(URL);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const loaded = (await res.json()) as Pokemon[];
     inst._all = loaded.slice(1);
-    return { instance: inst };
+    return inst;
   }
 
   getAllPokemons(): Pokemon[] {
