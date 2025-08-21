@@ -16,10 +16,8 @@ function makeDOM() {
   // optional table to influence width logic
   const table = document.createElement('table');
   table.id = 'pokemons-table';
-  // set clientWidth via style (jsdom doesn't compute layout but code reads clientWidth)
-  // we can set a property directly
-  // @ts-ignore
-  table.clientWidth = 800;
+  // jsdom exposes clientWidth as a getter-only property; define it explicitly
+  Object.defineProperty(table, 'clientWidth', { value: 800, configurable: true });
   document.body.appendChild(table);
 }
 
