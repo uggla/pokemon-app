@@ -36,7 +36,7 @@ h1 {
 }
 
 .page-header { display:flex; align-items:center; gap:1rem; justify-content:center; margin-bottom: 0.6rem }
-.pokemon-logo { height: 4.4rem; width: auto; margin-right: 0.4rem }
+.pokemon-logo { height: 6.6rem; width: auto; margin-right: 0.4rem }
 .title { font-size: 2.2rem; margin:0; }
 
 #app {
@@ -692,12 +692,10 @@ button:focus-visible {
 
 .app-footer {
   display:flex;
-  justify-content:space-between;
+  justify-content:center;
   align-items:center;
-  gap:1rem;
+  gap:0.6rem;
   margin-top:1.3rem;
 }
-.footer-left { display:flex; align-items:center; gap:0.6rem }
-.made-with { font-size:0.85rem; color:#cfcfcf }
-.footer-right { display:flex; align-items:center }
-.footer-counter .card { padding:0.15rem 0.4rem }
+.made-with { font-size:0.95rem; color:#cfcfcf; display:flex; gap:0.4rem; align-items:center }
+.logo.inline { height:1.2rem }
