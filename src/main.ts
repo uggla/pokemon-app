@@ -1,6 +1,7 @@
 import "./style.css";
 import typescriptLogo from "/typescript.svg";
 import viteLogo from "/vite.svg";
+import pokemonLogo from "/International_Pokémon_logo.svg";
 import { setupCounter } from "./counter.ts";
 import { setupPokemonTable } from "./pokemonTable.ts";
 import { setupPokemonChart } from './pokemonChart.ts';
@@ -13,19 +14,13 @@ window.addEventListener("load", () => {
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-      Click on the Vite and TypeScript logos to learn more
-    </p>
+    <header class="page-header">
+      <img src="${pokemonLogo}" alt="Pokemon logo" class="pokemon-logo" />
+      <h1 class="title">Pokemon App</h1>
+    </header>
+    <main>
       <div id="mypara"></div>
+    </main>
     <table id="pokemons-table">
       <thead>
         <tr>
@@ -104,6 +99,17 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       </select>
     </div>
     <div id="pokemon-chart" style="margin-top:1rem; display:flex; justify-content:center;"></div>
+
+    <footer class="app-footer">
+      <div class="footer-left">
+        <a href="https://vite.dev" target="_blank"><img src="${viteLogo}" class="logo small" alt="Vite logo" /></a>
+        <a href="https://www.typescriptlang.org/" target="_blank"><img src="${typescriptLogo}" class="logo small vanilla" alt="TypeScript logo" /></a>
+        <div class="made-with">made with ❤️ with Vite + TypeScript</div>
+      </div>
+      <div class="footer-right">
+        <div class="card footer-counter"><button id="counter" type="button"></button></div>
+      </div>
+    </footer>
   </div>
 `;
 
