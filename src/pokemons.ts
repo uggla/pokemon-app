@@ -1,4 +1,4 @@
-const URL = "https://tyradex.vercel.app/api/v1/pokemon";
+const URL = "https://tyradex.app/api/v1/pokemon";
 
 export type Pokemon = {
   pokedex_id: number;

@@ -62,7 +62,7 @@ Use the helpers from `src/pokemonStore.ts` when you need cached data:
 
 ## Data source / API
 
-- The app (via `Pokemons.load()`) fetches data from `https://tyradex.vercel.app/api/v1/pokemon`.
+- The app (via `Pokemons.load()`) fetches data from `https://tyradex.app/api/v1/pokemon`.
 - Network calls should be treated as untrusted — do not inject raw HTML from API responses into the DOM.
 
 ## Testing
